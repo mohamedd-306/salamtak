@@ -1,0 +1,63 @@
+========================================
+  FIX REPORT IMAGES - 2 SIMPLE STEPS
+========================================
+
+STEP 1: LOGIN TO FIREBASE
+--------------------------
+Open Command Prompt (CMD) and run:
+
+cd "c:\New folder\htdocs\swebsite\salamtak - Copy"
+firebase login
+
+(Browser will open, login with: mr121150@gmail.com)
+
+
+STEP 2: DEPLOY RULES
+---------------------
+After login, run:
+
+firebase deploy --only storage
+
+Done! ✅
+
+
+STEP 3: RESTART APP
+--------------------
+Close the Flutter app and run it again.
+Report images should now load!
+
+
+========================================
+  ALTERNATIVE: USE WEB CONSOLE
+========================================
+
+If CLI doesn't work:
+
+1. Go to: https://console.firebase.google.com/project/salmtak-6fffe/storage/rules
+
+2. Login with: mr121150@gmail.com
+
+3. Copy ALL text from the file: storage.rules
+
+4. Paste into the editor on the website
+
+5. Click "Publish" button
+
+6. Restart the Flutter app
+
+Done! ✅
+
+
+========================================
+  WHY THIS FIXES IT
+========================================
+
+The Firebase Storage rules were blocking
+access to /reports/ folder where report
+images are stored.
+
+The updated rules allow authenticated
+users to read report images.
+
+
+========================================

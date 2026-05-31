@@ -1,0 +1,107 @@
+═══════════════════════════════════════════════════════════════
+  ADMIN PRODUCT MANAGEMENT - DEPLOYMENT COMMANDS
+═══════════════════════════════════════════════════════════════
+
+📋 COPY AND PASTE THESE COMMANDS INTO COMMAND PROMPT (CMD)
+
+⚠️  IMPORTANT: Use CMD, not PowerShell!
+
+───────────────────────────────────────────────────────────────
+STEP 1: Navigate to Project Directory
+───────────────────────────────────────────────────────────────
+
+cd "c:\New folder\htdocs\swebsite\salamtak - Copy"
+
+───────────────────────────────────────────────────────────────
+STEP 2: Login to Firebase
+───────────────────────────────────────────────────────────────
+
+firebase login
+
+(This will open your browser - login with your Google account)
+
+───────────────────────────────────────────────────────────────
+STEP 3: Set Active Project
+───────────────────────────────────────────────────────────────
+
+firebase use salmtak-6fffe
+
+───────────────────────────────────────────────────────────────
+STEP 4: Deploy Firebase Rules and Indexes
+───────────────────────────────────────────────────────────────
+
+firebase deploy --only firestore:rules,storage,firestore:indexes
+
+Expected output:
+✔ Deploy complete!
+
+───────────────────────────────────────────────────────────────
+STEP 5: Run the App
+───────────────────────────────────────────────────────────────
+
+flutter run
+
+───────────────────────────────────────────────────────────────
+VERIFICATION CHECKLIST
+───────────────────────────────────────────────────────────────
+
+After deployment:
+
+1. Login as admin
+2. Go to Admin Home
+3. Click "Manage Products" button
+4. Test: Add, Edit, Delete products
+5. Verify changes sync to website
+
+───────────────────────────────────────────────────────────────
+ADMIN USER SETUP
+───────────────────────────────────────────────────────────────
+
+Your admin user MUST have this field in Firestore:
+
+Collection: users
+Document: [your-user-id]
+Field: userType = "admin"
+
+Check at: https://console.firebase.google.com/project/salmtak-6fffe/firestore
+
+───────────────────────────────────────────────────────────────
+TROUBLESHOOTING
+───────────────────────────────────────────────────────────────
+
+Problem: "No currently active project"
+Fix: Run "firebase use salmtak-6fffe"
+
+Problem: "Permission denied"
+Fix: Verify userType = "admin" in Firestore
+
+Problem: PowerShell execution policy error
+Fix: Use CMD instead of PowerShell
+
+Problem: Images not uploading
+Fix: Run "firebase deploy --only storage"
+
+───────────────────────────────────────────────────────────────
+QUICK REFERENCE
+───────────────────────────────────────────────────────────────
+
+Project ID: salmtak-6fffe
+Firebase Console: https://console.firebase.google.com/project/salmtak-6fffe
+Firestore: https://console.firebase.google.com/project/salmtak-6fffe/firestore
+
+Files Deployed:
+- firestore.rules (Firestore security rules)
+- storage.rules (Storage security rules)
+- firestore.indexes.json (Query indexes)
+
+───────────────────────────────────────────────────────────────
+DOCUMENTATION
+───────────────────────────────────────────────────────────────
+
+READY_TO_DEPLOY.md - Quick start guide
+DEPLOYMENT_STEPS.md - Detailed deployment instructions
+ADMIN_PRODUCT_MANAGEMENT_README.md - Complete feature guide
+
+═══════════════════════════════════════════════════════════════
+  READY TO DEPLOY! 🚀
+═══════════════════════════════════════════════════════════════

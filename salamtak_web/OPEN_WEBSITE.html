@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=http://localhost:8000/">
+    <title>Opening Salamtak Website...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 32px auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Salamtak</h1>
+        <div class="spinner"></div>
+        <p>Opening website...</p>
+        <p style="font-size: 14px; margin-top: 32px;">
+            If the page doesn't open automatically, click here:<br>
+            <a href="http://localhost:8000/">http://localhost:8000/</a>
+        </p>
+        <p style="font-size: 12px; margin-top: 24px; opacity: 0.7;">
+            Default Admin: 12345678901234 / admin123456<br>
+            Default User: 11111111111111 / user123456
+        </p>
+    </div>
+</body>
+</html>

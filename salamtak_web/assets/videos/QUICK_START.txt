@@ -1,0 +1,47 @@
+QUICK START - Adding Video Background
+======================================
+
+STEP 1: Get a Video
+-------------------
+Download a free video from:
+- Pexels: https://www.pexels.com/videos/
+- Pixabay: https://pixabay.com/videos/
+
+Search for: "city", "urban", "infrastructure", or "abstract"
+
+STEP 2: Rename the Video
+-------------------------
+Rename your downloaded video to: background.mp4
+
+STEP 3: Place the Video
+------------------------
+Copy background.mp4 to this folder:
+salamtak_web/assets/videos/
+
+STEP 4: Test
+------------
+1. Open the website in your browser
+2. Login and go to the dashboard
+3. You should see your video playing in the background!
+
+NOTES:
+------
+- Video will loop automatically
+- Video is muted by default
+- On mobile devices, video is disabled for performance
+- If video fails to load, an animated gradient will show instead
+- Recommended video size: under 10MB
+- Recommended resolution: 1920x1080 (Full HD)
+
+EXAMPLE VIDEOS TO TRY:
+----------------------
+1. City Infrastructure:
+   https://www.pexels.com/video/aerial-view-of-city-854100/
+
+2. Urban Development:
+   https://www.pexels.com/video/time-lapse-video-of-city-854745/
+
+3. Abstract Background:
+   https://www.pexels.com/video/abstract-digital-grid-3129957/
+
+That's it! Enjoy your video background! 🎥

@@ -1,0 +1,53 @@
+========================================
+  DEPLOY FIREBASE STORAGE RULES
+========================================
+
+PROBLEM: Report images keep loading and never display
+
+SOLUTION: Deploy updated storage.rules to allow reading report images
+
+========================================
+  DEPLOYMENT COMMANDS
+========================================
+
+Option 1 - Double-click the batch file:
+   deploy_storage_rules.bat
+
+Option 2 - Run this command in CMD:
+   firebase deploy --only storage
+
+Option 3 - If you need to login first:
+   firebase login
+   firebase deploy --only storage
+
+========================================
+  FIREBASE CONSOLE METHOD
+========================================
+
+If CLI doesn't work, use the web console:
+
+1. Go to: https://console.firebase.google.com/
+2. Select project: salmtak-6fffe
+3. Click "Storage" in left menu
+4. Click "Rules" tab
+5. Copy contents from storage.rules file
+6. Paste into the editor
+7. Click "Publish"
+
+========================================
+  AFTER DEPLOYMENT
+========================================
+
+1. Restart the Flutter app (not hot reload)
+2. Navigate to Admin Home
+3. Report images should now load correctly
+
+========================================
+  PROJECT INFO
+========================================
+
+Project ID: salmtak-6fffe
+Admin Email: mr121150@gmail.com
+Storage Bucket: salmtak-6fffe.firebasestorage.app
+
+========================================

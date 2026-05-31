@@ -1,0 +1,151 @@
+LOGO REFINEMENT - REMOVED BACKGROUND & ENLARGED
+===============================================
+
+COMPLETED: Removed background containers and enlarged the logo across all pages
+
+CHANGES MADE:
+-------------
+
+1. Removed Backgrounds:
+   - Removed: rgba(255, 255, 255, 0.2) background
+   - Removed: backdrop-filter blur
+   - Removed: border-radius on containers
+   - Removed: border styling
+   - Result: Clean, transparent logo display
+
+2. Enlarged Logo Sizes:
+   - Navbar logo: 40px → 50px (25% larger)
+   - Login card logo: 88px → 100px (14% larger)
+   - Signup header logo: 72px → 90px (25% larger)
+   - Home page logo: 100% → 125% scale (25% larger)
+
+FILES UPDATED:
+--------------
+
+1. salamtak_web/includes/public_nav.php
+   - Size: 50x50px (was 40x40px)
+   - Background: removed
+   - Border-radius: removed
+
+2. salamtak_web/user/includes/header.php
+   - Size: 50x50px (was 40x40px)
+   - Background: removed
+   - Border-radius: removed
+
+3. salamtak_web/user/report.php
+   - Size: 50x50px (was 40x40px)
+   - Background: removed
+   - Border-radius: removed
+
+4. salamtak_web/home.php
+   - Scale: 125% (was 100%)
+   - Background: removed from CSS
+   - Landing-brand-logo class updated
+
+5. salamtak_web/login.php
+   - Navbar: 50x50px (was 40x40px)
+   - Card logo: 100x100px (was 88x88px)
+   - Background: removed
+   - Border: removed
+
+6. salamtak_web/signup.php
+   - Navbar: 50x50px (was 40x40px)
+   - Header logo: 90x90px (was 72x72px)
+   - Background: removed
+   - Border: removed
+   - Backdrop-filter: removed
+
+7. salamtak_web/assets/css/style.css
+   - .logo-icon: 100x100px (was 88x88px)
+   - Removed background, backdrop-filter, border
+   - Removed box-shadow from hover state
+   - Kept transform animation
+
+LOGO DISPLAY:
+-------------
+
+Before:
+- Logo in semi-transparent white container
+- Rounded corners
+- Backdrop blur effect
+- Border around container
+- Smaller size (40px navbar, 88px cards)
+
+After:
+- Logo displayed directly (no container background)
+- Clean, transparent appearance
+- Larger size (50px navbar, 100px cards)
+- Better visibility
+- More prominent branding
+
+VISUAL IMPROVEMENTS:
+-------------------
+
+✓ Logo is more prominent and visible
+✓ No distracting background container
+✓ Cleaner, more professional appearance
+✓ Better integration with navbar design
+✓ Logo details more visible at larger size
+✓ Maintains aspect ratio with object-fit: contain
+
+SIZE COMPARISON:
+----------------
+
+Navbar Logo:
+- Before: 40x40px in white container
+- After: 50x50px no container
+- Increase: 25% larger
+
+Login Card Logo:
+- Before: 88x88px in white container
+- After: 100x100px no container
+- Increase: 14% larger
+
+Signup Header Logo:
+- Before: 72x72px in white container
+- After: 90x90px no container
+- Increase: 25% larger
+
+PAGES AFFECTED:
+--------------
+✓ All navbar instances (home, static pages, dashboard, report)
+✓ Login page (navbar + card)
+✓ Signup page (navbar + header)
+✓ All user dashboard pages
+✓ All admin pages (if using same header)
+
+TESTING CHECKLIST:
+-----------------
+□ Visit home.php - logo larger and no background
+□ Navigate to About, Features, Contact - consistent
+□ Check Login page - both logos updated
+□ Check Signup page - both logos updated
+□ Login and check Dashboard - logo updated
+□ Navigate through user pages - consistent
+□ Create a report - logo updated
+□ Test on mobile - logo scales properly
+□ Verify logo is clear and prominent
+□ Check logo doesn't have white box around it
+
+TECHNICAL NOTES:
+----------------
+
+Container Styling:
+- Width and height define logo size
+- Display: flex for centering
+- Overflow: hidden to contain image
+- No background or border styling
+
+Image Styling:
+- Width: 100% (fills container)
+- Height: 100% (fills container)
+- Object-fit: contain (maintains aspect ratio)
+- No additional styling needed
+
+Performance:
+- Same image file used everywhere
+- Browser caching active
+- No additional CSS processing for backgrounds
+- Cleaner DOM structure
+
+The logo now appears larger and cleaner without any background container across the entire website!

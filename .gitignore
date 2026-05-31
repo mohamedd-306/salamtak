@@ -1,0 +1,123 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Windows build output
+/windows/flutter/ephemeral/
+
+# macOS build output
+/macos/Flutter/ephemeral/
+
+# Linux build output
+/linux/flutter/ephemeral/
+
+# Web build output
+/web/build/
+
+# Firebase & Sensitive Configuration Files
+# IMPORTANT: Never commit these files!
+**/google-services.json
+**/GoogleService-Info.plist
+firebase-adminsdk-*.json
+serviceAccountKey.json
+.env
+.env.local
+.env.*.local
+
+# PHP Configuration (contains database credentials)
+salamtak_web/config.php
+
+# Uploaded files (user-generated content)
+salamtak_web/uploads/
+salamtak_web/assets/products/*.jpg
+salamtak_web/assets/products/*.jpeg
+salamtak_web/assets/products/*.png
+salamtak_web/assets/products/*.gif
+salamtak_web/assets/products/*.webp
+# Keep placeholder
+!salamtak_web/assets/products/placeholder.svg
+
+# Temporary PHP files
+salamtak_web/test_*.php
+salamtak_web/debug_*.php
+salamtak_web/check_*.php
+salamtak_web/convert_*.php
+salamtak_web/auto_fix_*.php
+salamtak_web/fix_*.php
+salamtak_web/reset_*.php
+salamtak_web/update_*.php
+salamtak_web/add_*.php
+salamtak_web/use_*.php
+salamtak_web/complete_*.php
+
+# Chrome device data (from Flutter testing)
+.dart_tool/chrome-device/
+
+# Node modules (if any)
+node_modules/
+
+# Coverage
+coverage/
+
+# Exceptions to above rules
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
+
+# Kiro specs (optional - uncomment if you don't want to commit specs)
+# .kiro/
+
+# Documentation files (keep these)
+!*.md
+!IMPROVEMENTS_IMPLEMENTED.md
+!PRODUCT_IMAGE_FIX.md
+!WEBSITE_ADMIN_IMAGE_FIX.md
+!WEBSITE_REPORT_IMAGE_PATH_FIX.md
+!FLUTTER_ADMIN_WEBSITE_REPORTS_FIX.md
+!WEBSITE_IMAGE_BASE64_CONVERSION.md
+!TASK_6_COMPLETED.md
+!GD_LIBRARY_FIX.md
+!ENABLE_GD_LIBRARY_GUIDE.md
+!FINAL_TASK_SUMMARY.md

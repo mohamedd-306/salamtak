@@ -1,0 +1,137 @@
+COLOR SCHEME UPDATE - DARK BLUE & YELLOW THEME
+==============================================
+
+COMPLETED: Updated entire website to use consistent dark blue and yellow color scheme
+
+NEW COLOR SCHEME:
+----------------
+
+Primary Colors:
+- Primary: #0f1d3f (Dark Navy Blue - from footer)
+- Primary Light: #1a2d5a
+- Primary Dark: #0a1429
+- Primary Gradient: linear-gradient(135deg, #0f1d3f 0%, #1a2d5a 100%)
+
+Accent Colors:
+- Accent: #FBBF24 (Yellow - for highlights)
+- Accent Light: #FCD34D
+- Accent Dark: #F59E0B
+
+CHANGES MADE:
+-------------
+
+1. Updated salamtak_web/assets/css/style.css
+   - Changed CSS variables from purple/blue to dark navy blue
+   - Added yellow accent colors
+   - Updated all gradients to use new dark blue
+   - Updated video background fallback gradient
+   - Updated login page gradient
+   - Updated mobile responsive gradients
+
+2. Updated salamtak_web/home.php
+   - Hero highlight text now yellow (#FBBF24)
+   - Navbar background: dark blue gradient
+   - Store buttons: white background with dark blue text
+   - Navbar hover effects: yellow
+   - Mobile fallback gradient: dark blue
+
+3. Updated salamtak_web/includes/public_nav.php
+   - Navbar background: dark blue gradient (rgba(15, 29, 63, 0.95))
+   - Dashboard button: white background with dark blue text
+   - Sign Up button: white background with dark blue text
+   - Consistent with footer color
+
+4. Updated salamtak_web/user/includes/header.php
+   - Navbar background: dark blue gradient
+   - Dashboard button: white background with dark blue text
+   - Matches public navbar exactly
+
+5. Updated salamtak_web/user/report.php
+   - Navbar background: dark blue gradient
+   - Dashboard button: white background with dark blue text
+   - Consistent with all other pages
+
+COLOR USAGE ACROSS WEBSITE:
+---------------------------
+
+Navigation Bar:
+- Background: Dark blue gradient (rgba(15, 29, 63, 0.95) to rgba(26, 45, 90, 0.95))
+- Text: White
+- Hover: Yellow (#FBBF24)
+- Buttons: White background with dark blue text
+
+Hero Section (Home Page):
+- Background: Video with dark blue fallback
+- Main heading: White
+- Highlight text: Yellow (#FBBF24)
+- Description: White
+
+Buttons & CTAs:
+- Primary buttons: Dark blue background
+- Secondary buttons: White background with dark blue text
+- Hover effects: Slight lift with shadow
+
+Cards & Components:
+- Background: White
+- Borders: Light gray
+- Icons: Dark blue with gradients
+- Hover states: Dark blue accents
+
+Footer:
+- Background: #0f1d3f (matches navbar)
+- Text: White
+- Links: White with hover effects
+
+VISUAL CONSISTENCY:
+------------------
+
+✓ Navbar matches footer color exactly
+✓ Yellow used for all highlights and important text
+✓ Dark blue used for all primary elements
+✓ White buttons with dark blue text for CTAs
+✓ Consistent gradient throughout (dark blue)
+✓ Yellow accent for emphasis and highlights
+
+RESPONSIVE BEHAVIOR:
+-------------------
+
+Desktop:
+- Full dark blue gradient navbar
+- Yellow highlights visible
+- All colors consistent
+
+Mobile:
+- Dark blue gradient fallback (no video)
+- Yellow highlights maintained
+- Navbar collapses but keeps colors
+
+TESTING CHECKLIST:
+-----------------
+□ Visit home.php - yellow highlight text visible
+□ Navbar is dark blue (matches footer)
+□ Dashboard button is white with dark blue text
+□ Sign Up button is white with dark blue text
+□ Hover effects show yellow color
+□ Login page has dark blue background
+□ Dashboard pages use dark blue navbar
+□ Report page uses dark blue navbar
+□ All gradients are dark blue (not purple)
+□ Footer matches navbar color
+□ Test on mobile - colors consistent
+
+BEFORE vs AFTER:
+---------------
+
+BEFORE:
+- Primary: Purple/Blue (#6366F1)
+- Gradient: Purple to violet
+- Highlights: Purple gradient
+- Inconsistent with footer
+
+AFTER:
+- Primary: Dark Navy Blue (#0f1d3f)
+- Gradient: Dark blue to lighter blue
+- Highlights: Yellow (#FBBF24)
+- Matches footer perfectly
+
+The entire website now has a cohesive, professional dark blue and yellow color scheme that's consistent across all pages!

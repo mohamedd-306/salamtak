@@ -1,0 +1,52 @@
+========================================
+   FIX REPORT IMAGES - QUICK CHECKLIST
+========================================
+
+□ STEP 1: Open this link in your browser
+   https://console.firebase.google.com/project/salmtak-6fffe/storage/rules
+
+□ STEP 2: Login with
+   Email: mr121150@gmail.com
+   Password: (your password)
+
+□ STEP 3: Open the file on your computer
+   Location: c:\New folder\htdocs\swebsite\salamtak - Copy\storage.rules
+   (Double-click to open in Notepad)
+
+□ STEP 4: Copy all the text from storage.rules
+   Press: Ctrl + A (select all)
+   Press: Ctrl + C (copy)
+
+□ STEP 5: Go back to Firebase Console in browser
+   Click inside the editor
+   Press: Ctrl + A (select all existing text)
+   Press: Ctrl + V (paste new rules)
+
+□ STEP 6: Click "Publish" button
+   (Top-right corner, blue button)
+   Confirm if asked
+
+□ STEP 7: Close Flutter app completely
+   Stop the app in VS Code (Ctrl + C in terminal)
+
+□ STEP 8: Run the app again
+   flutter run -d windows
+   OR press F5 in VS Code
+
+□ STEP 9: Test it works
+   Login as admin (Work ID: 221007689, Password: 631663)
+   Go to Admin Home (Reports)
+   Check if images load ✓
+
+========================================
+   DONE! Images should now load! 🎉
+========================================
+
+Time needed: 3-5 minutes
+
+If images still don't load:
+- Wait 30 seconds and restart app again
+- Check internet connection
+- Verify rules were published in Firebase Console
+
+========================================

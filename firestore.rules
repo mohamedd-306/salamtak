@@ -1,0 +1,91 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return isAuthenticated() && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.userType == 'admin';
+    }
+    
+    // Products collection rules
+    match /products/{productId} {
+      // Allow read access to all authenticated users
+      // This allows both admin and regular users to view products
+      allow read: if isAuthenticated();
+      
+      // Allow write operations (create, update, delete) only for admin users
+      // Admin status is verified by checking the userType field in the users collection
+      allow create, update, delete: if isAdmin();
+      
+      // Additional validation for product data structure
+      allow create: if isAdmin() && 
+                      request.resource.data.keys().hasAll(['name', 'description', 'price', 'stock', 'category', 'image', 'createdAt', 'updatedAt']) &&
+                      request.resource.data.name is string &&
+                      request.resource.data.name.size() > 0 &&
+                      request.resource.data.name.size() <= 100 &&
+                      request.resource.data.description is string &&
+                      request.resource.data.description.size() > 0 &&
+                      request.resource.data.description.size() <= 500 &&
+                      request.resource.data.price is number &&
+                      request.resource.data.price > 0 &&
+                      request.resource.data.stock is int &&
+                      request.resource.data.stock >= 0 &&
+                      request.resource.data.category is string &&
+                      request.resource.data.category.size() > 0 &&
+                      request.resource.data.image is string &&
+                      request.resource.data.image.size() > 0;
+      
+      allow update: if isAdmin() &&
+                      request.resource.data.keys().hasAll(['name', 'description', 'price', 'stock', 'category', 'image', 'createdAt', 'updatedAt']) &&
+                      request.resource.data.name is string &&
+                      request.resource.data.name.size() > 0 &&
+                      request.resource.data.name.size() <= 100 &&
+                      request.resource.data.description is string &&
+                      request.resource.data.description.size() > 0 &&
+                      request.resource.data.description.size() <= 500 &&
+                      request.resource.data.price is number &&
+                      request.resource.data.price > 0 &&
+                      request.resource.data.stock is int &&
+                      request.resource.data.stock >= 0 &&
+                      request.resource.data.category is string &&
+                      request.resource.data.category.size() > 0 &&
+                      request.resource.data.image is string &&
+                      request.resource.data.image.size() > 0 &&
+                      // Ensure createdAt timestamp is not modified during updates
+                      request.resource.data.createdAt == resource.data.createdAt;
+    }
+    
+    // Users collection rules (for reference and admin verification)
+    match /users/{userId} {
+      // Users can read their own data
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      
+      // Admins can read all user data
+      allow read: if isAdmin();
+      
+      // Users can update their own data (except userType)
+      allow update: if isAuthenticated() && 
+                      request.auth.uid == userId &&
+                      request.resource.data.userType == resource.data.userType;
+      
+      // Only admins can create users or change userType
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      
+      // Only admins can delete users
+      allow delete: if isAdmin();
+    }
+    
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

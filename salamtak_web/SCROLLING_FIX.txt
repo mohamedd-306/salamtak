@@ -1,0 +1,86 @@
+SCROLLING FIX FOR LOGIN & SIGNUP PAGES
+=======================================
+
+ISSUE: Login and signup pages were not scrollable
+
+ROOT CAUSE:
+-----------
+1. Pages had "overflow: hidden" which prevented scrolling
+2. Pages used "display: flex" with "align-items: center" which centered content but prevented overflow
+3. Body had fixed padding-top that conflicted with page-specific padding
+
+FIXES APPLIED:
+--------------
+
+1. Updated salamtak_web/assets/css/style.css
+
+   .login-page:
+   - Changed from "overflow: hidden" to "overflow-x: hidden; overflow-y: auto"
+   - Removed "display: flex; align-items: center; justify-content: center"
+   - Changed padding from "100px 20px 20px" to "100px 20px 40px"
+   - Now allows vertical scrolling
+
+   .signup-page:
+   - Changed from "overflow: hidden" to "overflow-x: hidden; overflow-y: auto"
+   - Changed padding from "100px 0 40px" to "100px 20px 40px"
+   - Now allows vertical scrolling
+
+   .login-container:
+   - Added "margin: 0 auto" for proper centering
+
+   .signup-container:
+   - Added "padding: 0 20px" for proper spacing
+
+   body:
+   - Changed padding-top from fixed 72px to 0 by default
+   - Added conditional padding only for pages with navbar (not login/signup)
+   - Prevents padding conflicts
+
+2. Updated salamtak_web/login.php
+   - Removed inline "margin-top: 80px" style
+   - Now handled by CSS padding
+
+3. Updated salamtak_web/signup.php
+   - Removed inline "margin-top: 80px" style
+   - Removed extra wrapper div
+   - Simplified structure
+   - Now handled by CSS padding
+
+HOW IT WORKS NOW:
+-----------------
+
+Login Page:
+- Page has padding-top: 100px (space for navbar)
+- Page has padding-bottom: 40px (space at bottom)
+- overflow-y: auto allows vertical scrolling
+- overflow-x: hidden prevents horizontal scrolling
+- Content flows naturally and scrolls when needed
+
+Signup Page:
+- Page has padding-top: 100px (space for navbar)
+- Page has padding-bottom: 40px (space at bottom)
+- overflow-y: auto allows vertical scrolling
+- overflow-x: hidden prevents horizontal scrolling
+- Content flows naturally and scrolls when needed
+
+Other Pages:
+- Body has padding-top: 72px for navbar
+- Normal scrolling behavior
+- No conflicts
+
+TESTING CHECKLIST:
+-----------------
+□ Visit login.php - page should scroll if content is tall
+□ Visit signup.php - page should scroll (form is long)
+□ Scroll down on signup page - should see all form fields
+□ Scroll up - should see navbar at top
+□ Test on mobile - scrolling should work
+□ Test on desktop - scrolling should work
+□ Verify no horizontal scrolling
+□ Check that navbar stays fixed at top while scrolling
+□ Verify content doesn't overflow viewport
+□ Check that all form fields are accessible
+
+RESULT:
+-------
+Both login and signup pages now scroll properly, allowing users to access all content regardless of screen size. The navbar remains fixed at the top while the content scrolls beneath it.

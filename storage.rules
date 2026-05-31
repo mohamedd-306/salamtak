@@ -1,0 +1,71 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is admin
+    // Checks the userType field in the Firestore users collection
+    function isAdmin() {
+      return isAuthenticated() && 
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.userType == 'admin';
+    }
+    
+    // Helper function to validate image file type
+    function isValidImageType() {
+      return request.resource.contentType.matches('image/jpeg') ||
+             request.resource.contentType.matches('image/jpg') ||
+             request.resource.contentType.matches('image/png') ||
+             request.resource.contentType.matches('image/webp');
+    }
+    
+    // Helper function to validate file size (max 5MB)
+    function isValidFileSize() {
+      return request.resource.size <= 5 * 1024 * 1024; // 5MB in bytes
+    }
+    
+    // Products folder rules
+    match /products/{imageId} {
+      // Allow read access to all users (public read for product images)
+      // This allows the mobile app and website to display product images
+      allow read: if true;
+      
+      // Allow write operations (create, update, delete) only for admin users
+      // Admin status is verified by checking the userType field in Firestore users collection
+      allow create: if isAdmin() && 
+                      isValidImageType() && 
+                      isValidFileSize();
+      
+      allow update: if isAdmin() && 
+                      isValidImageType() && 
+                      isValidFileSize();
+      
+      allow delete: if isAdmin();
+    }
+    
+    // Reports folder rules
+    match /reports/{imageId} {
+      // Allow read access to all authenticated users
+      // This allows users and admins to view report images
+      allow read: if isAuthenticated();
+      
+      // Allow write operations (create) for authenticated users
+      // Users can upload images when creating reports
+      allow create: if isAuthenticated() && 
+                      isValidImageType() && 
+                      isValidFileSize();
+      
+      // Allow delete only for admins
+      allow delete: if isAdmin();
+    }
+    
+    // Default deny all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

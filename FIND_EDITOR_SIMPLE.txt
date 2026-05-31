@@ -1,0 +1,82 @@
+========================================
+   HOW TO FIND THE EDITOR - SUPER SIMPLE
+========================================
+
+EASIEST WAY - USE THIS LINK:
+https://console.firebase.google.com/project/salmtak-6fffe/storage/rules
+
+↓ Login with: mr121150@gmail.com
+↓ The editor appears automatically!
+✓ DONE!
+
+========================================
+
+OR NAVIGATE MANUALLY:
+
+STEP 1: Go to https://console.firebase.google.com/
+        Login with: mr121150@gmail.com
+
+STEP 2: Click on project: salmtak-6fffe
+
+STEP 3: Look at LEFT SIDEBAR
+        Find "Storage" and click it
+        
+        Left Sidebar looks like:
+        ┌─────────────────┐
+        │ 🏠 Project      │
+        │ 📊 Analytics    │
+        │ 🔧 Build        │
+        │   Authentication│
+        │   Firestore     │
+        │   Storage  ← HERE!
+        │   Hosting       │
+        └─────────────────┘
+
+STEP 4: Click "Rules" tab at the top
+        
+        Top tabs look like:
+        ┌──────────────────────────┐
+        │ Files | Rules | Usage    │
+        │         ↑                │
+        │      CLICK HERE          │
+        └──────────────────────────┘
+
+STEP 5: YOU'RE AT THE EDITOR!
+        
+        You'll see:
+        ┌────────────────────────────┐
+        │              [Publish] ← Button
+        │ 1  rules_version = '2';   │
+        │ 2                          │
+        │ 3  service firebase...     │
+        │ 4  ...                     │
+        │                            │
+        │  ← THIS BIG BOX IS EDITOR │
+        └────────────────────────────┘
+
+========================================
+
+WHAT TO DO IN THE EDITOR:
+
+1. Press Ctrl + A (select all)
+2. Press Ctrl + V (paste new rules)
+3. Click "Publish" button (top-right)
+4. Done! ✓
+
+========================================
+
+CHECKLIST - AM I IN THE RIGHT PLACE?
+
+✓ I see a big text box with code
+✓ I see "Publish" button (blue, top-right)
+✓ The code starts with: rules_version = '2';
+✓ URL says: storage/rules
+
+If YES to all → You're in the editor! ✓
+
+========================================
+
+DIRECT LINK (COPY THIS):
+https://console.firebase.google.com/project/salmtak-6fffe/storage/rules
+
+========================================
