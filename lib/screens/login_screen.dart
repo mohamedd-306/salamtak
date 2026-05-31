@@ -48,7 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString('name', user.name);
 
         // Initialize cart for user (not admin)
-        if (user.userType != 'admin' && mounted) {
+        if (user.userType != 'moderator' && 
+            user.userType != 'product_manager' && 
+            mounted) {
           final cartProvider = Provider.of<CartProvider>(
             context,
             listen: false,
@@ -62,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(
             builder:
                 (_) =>
-                    user.userType == 'admin'
+                    user.isAdmin
                         ? const AdminNavigation()
                         : const UserHomeScreen(),
           ),

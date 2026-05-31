@@ -230,6 +230,8 @@ class AppLocalizations {
   // Admin
   String get admin => isArabic ? 'مدير' : 'Admin';
   String get controlPanel => isArabic ? 'لوحة التحكم' : 'Control Panel';
+  String get reportsManagement => isArabic ? 'إدارة البلاغات' : 'Reports Management';
+  String get reports => isArabic ? 'البلاغات' : 'Reports';
   String get total => isArabic ? 'الإجمالي' : 'Total';
   String get active => isArabic ? 'نشط' : 'Active';
   String get done => isArabic ? 'تم' : 'Done';

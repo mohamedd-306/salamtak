@@ -3,7 +3,7 @@ class User {
   final String nationalId;
   final String phoneNumber;
   final String name;
-  final String userType;
+  final String userType; // 'user', 'moderator', 'product_manager'
   final String? email;
   final String? address;
 
@@ -16,6 +16,12 @@ class User {
     this.email,
     this.address,
   });
+
+  // Helper methods to check user roles
+  bool get isUser => userType == 'user';
+  bool get isModerator => userType == 'moderator';
+  bool get isProductManager => userType == 'product_manager';
+  bool get isAdmin => isModerator || isProductManager; // Any admin type
 
   Map<String, dynamic> toMap() => {
     'id': id,

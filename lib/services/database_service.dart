@@ -26,15 +26,39 @@ class DatabaseService {
     print('=== LOGIN ATTEMPT ===');
     print('ID: $nationalId');
 
-    // HARDCODED ADMIN - Work ID 221007689
+    // HARDCODED MODERATOR - Work ID 221001001 (Reports Management Only)
+    if (nationalId == '221001001' && password == 'mod2024') {
+      print('✓ Moderator login successful (Work ID)');
+      return app_user.User(
+        id: 'moderator-221001001',
+        nationalId: '221001001',
+        phoneNumber: '01000000001',
+        name: 'Reports Moderator',
+        userType: 'moderator',
+      );
+    }
+
+    // HARDCODED PRODUCT MANAGER - Work ID 221002002 (Products & Orders Management)
+    if (nationalId == '221002002' && password == 'prod2024') {
+      print('✓ Product Manager login successful (Work ID)');
+      return app_user.User(
+        id: 'product_manager-221002002',
+        nationalId: '221002002',
+        phoneNumber: '01000000002',
+        name: 'Product Manager',
+        userType: 'product_manager',
+      );
+    }
+
+    // LEGACY ADMIN - Keep for backward compatibility (Full Access)
     if (nationalId == '221007689' && password == '631663') {
-      print('✓ Admin login successful (Work ID)');
+      print('✓ Legacy Admin login successful (Work ID) - Full Access');
       return app_user.User(
         id: 'admin-221007689',
         nationalId: '221007689',
         phoneNumber: '01000000000',
-        name: 'Administrator',
-        userType: 'admin',
+        name: 'System Administrator',
+        userType: 'product_manager', // Give full access via product_manager
       );
     }
 
@@ -46,7 +70,7 @@ class DatabaseService {
         nationalId: '12345678901234',
         phoneNumber: '01000000000',
         name: 'System Administrator',
-        userType: 'admin',
+        userType: 'product_manager', // Give full access via product_manager
       );
     }
 

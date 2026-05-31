@@ -20,6 +20,8 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   User? _currentUser;
   Map<String, dynamic>? _userData;
   bool _isLoading = true;
+  String _userRole = 'Admin';
+  String _userName = 'Admin';
 
   @override
   void initState() {
@@ -30,6 +32,16 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
   Future<void> _loadUserData() async {
     setState(() => _isLoading = true);
     try {
+      // Load from SharedPreferences first (for hardcoded users)
+      final prefs = await SharedPreferences.getInstance();
+      final userType = prefs.getString('userType') ?? 'product_manager';
+      final name = prefs.getString('name') ?? 'Admin';
+      
+      setState(() {
+        _userName = name;
+        _userRole = userType == 'moderator' ? 'Reports Moderator' : 'Product Manager';
+      });
+
       _currentUser = FirebaseAuth.instance.currentUser;
       if (_currentUser != null) {
         // Get user data from Firestore
@@ -170,9 +182,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
                               const SizedBox(height: 12),
                               // Name
                               Text(
-                                _userData?['name'] ??
-                                    _currentUser?.displayName ??
-                                    'Admin',
+                                _userName,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -180,12 +190,23 @@ class _AdminProfileScreenState extends State<AdminProfileScreen> {
                                 ),
                               ),
                               const SizedBox(height: 4),
-                              // Email
-                              Text(
-                                _currentUser?.email ?? '',
-                                style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.9),
-                                  fontSize: 14,
+                              // Role
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.2),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  _userRole,
+                                  style: TextStyle(
+                                    color: Colors.white.withValues(alpha: 0.95),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ],

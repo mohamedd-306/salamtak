@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/database_service.dart';
 import '../../models/report.dart';
 import '../../theme.dart';
@@ -17,6 +18,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen>
     with SingleTickerProviderStateMixin {
   String _filterStatus = 'all';
   late TabController _tabController;
+  String _userRole = 'Moderator'; // Default role display
 
   final _filters = ['all', 'pending', 'in_progress', 'resolved'];
 
@@ -28,6 +30,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen>
       if (!_tabController.indexIsChanging) {
         setState(() => _filterStatus = _filters[_tabController.index]);
       }
+    });
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    final name = prefs.getString('name') ?? 'Moderator';
+    setState(() {
+      _userRole = name;
     });
   }
 
@@ -140,7 +151,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen>
                                           ),
                                           const SizedBox(width: 4),
                                           Text(
-                                            l10n.admin,
+                                            _userRole,
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,
@@ -154,7 +165,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen>
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  l10n.controlPanel,
+                                  l10n.reportsManagement,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 26,

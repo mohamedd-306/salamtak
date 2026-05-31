@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../theme.dart';
 import '../../l10n/app_localizations.dart';
 import 'admin_home_screen.dart';
@@ -15,23 +16,78 @@ class AdminNavigation extends StatefulWidget {
 
 class _AdminNavigationState extends State<AdminNavigation> {
   int _currentIndex = 0;
+  String _userType = 'product_manager'; // Default to product_manager
 
-  late final List<Widget> _screens;
+  late List<Widget> _screens;
+  late List<BottomNavigationBarItem> _navItems;
 
   @override
   void initState() {
     super.initState();
-    _screens = [
-      const AdminHomeScreen(),
-      const OrdersManagementScreen(),
-      const ProductManagementScreen(),
-      const AdminProfileScreen(),
-    ];
+    _loadUserType();
+  }
+
+  Future<void> _loadUserType() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userType = prefs.getString('userType') ?? 'product_manager';
+    setState(() {
+      _userType = userType;
+      _buildNavigationItems();
+    });
+  }
+
+  void _buildNavigationItems() {
+    final l10n = AppLocalizations.of(context);
+
+    if (_userType == 'moderator') {
+      // Moderator: Only Reports and Profile
+      _screens = [
+        const AdminHomeScreen(),
+        const AdminProfileScreen(),
+      ];
+      _navItems = [
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.report_outlined),
+          activeIcon: const Icon(Icons.report),
+          label: l10n.reports,
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.person_outline),
+          activeIcon: const Icon(Icons.person),
+          label: l10n.profile,
+        ),
+      ];
+    } else {
+      // Product Manager: Orders, Products, and Profile
+      _screens = [
+        const OrdersManagementScreen(),
+        const ProductManagementScreen(),
+        const AdminProfileScreen(),
+      ];
+      _navItems = [
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.shopping_bag_outlined),
+          activeIcon: const Icon(Icons.shopping_bag),
+          label: l10n.orders,
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.inventory_outlined),
+          activeIcon: const Icon(Icons.inventory),
+          label: l10n.products,
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.person_outline),
+          activeIcon: const Icon(Icons.person),
+          label: l10n.profile,
+        ),
+      ];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    // Rebuild navigation items if context changes (for localization)
+    _buildNavigationItems();
 
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _screens),
@@ -60,28 +116,7 @@ class _AdminNavigationState extends State<AdminNavigation> {
           unselectedFontSize: 11,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
           elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home_outlined),
-              activeIcon: const Icon(Icons.home_rounded),
-              label: l10n.home,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.shopping_bag_outlined),
-              activeIcon: const Icon(Icons.shopping_bag),
-              label: l10n.orders,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.inventory_outlined),
-              activeIcon: const Icon(Icons.inventory),
-              label: l10n.products,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.person_outline),
-              activeIcon: const Icon(Icons.person),
-              label: l10n.profile,
-            ),
-          ],
+          items: _navItems,
         ),
       ),
     );
