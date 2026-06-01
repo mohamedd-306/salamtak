@@ -33,7 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_role'] = $adminData['role']; // 'moderator' or 'product_manager'
                 $_SESSION['work_id'] = $identifier;
                 $_SESSION['name'] = $adminData['name'];
-                redirect('admin/dashboard.php');
+                
+                // Redirect based on role
+                if ($adminData['role'] === 'moderator') {
+                    redirect('admin/dashboard.php'); // Reports
+                } else {
+                    redirect('admin/products.php'); // Products/Orders
+                }
             }
             // Check Firebase for admin with Work ID
             else {
@@ -49,7 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['admin_role'] = $user['adminRole'] ?? 'product_manager';
                         $_SESSION['work_id'] = $user['workId'] ?? $identifier;
                         $_SESSION['name'] = $user['name'] ?? 'Administrator';
-                        redirect('admin/dashboard.php');
+                        
+                        // Redirect based on role
+                        if (($_SESSION['admin_role'] ?? '') === 'moderator') {
+                            redirect('admin/dashboard.php'); // Reports
+                        } else {
+                            redirect('admin/products.php'); // Products/Orders
+                        }
                     } else {
                         $error = t('invalid_credentials');
                     }

@@ -282,7 +282,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <nav class="simple-admin-nav">
     <div class="simple-nav-container">
         <!-- Logo & Title -->
-        <a href="dashboard.php" class="nav-brand-link">
+        <a href="<?= isModerator() ? 'dashboard.php' : 'products.php' ?>" class="nav-brand-link">
             <div class="brand-logo" style="overflow: hidden; background: none; box-shadow: none;">
                 <img src="../assets/logof.png" alt="<?= t('app_name') ?>" style="width: 150%; height: 150%; object-fit: contain;">
             </div>
@@ -291,7 +291,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         
         <!-- Admin Navigation Links -->
         <div class="landing-nav-links">
-            <!-- Dashboard/Reports - Always visible for all admins -->
+            <!-- Reports Dashboard - Only for Moderators -->
+            <?php if (isModerator()): ?>
             <a href="dashboard.php" class="landing-nav-link <?= $current_page === 'dashboard.php' ? 'active' : '' ?>">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle; margin-right: 4px;">
                     <rect x="3" y="3" width="7" height="7"/>
@@ -299,8 +300,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <rect x="14" y="14" width="7" height="7"/>
                     <rect x="3" y="14" width="7" height="7"/>
                 </svg>
-                <?= isModerator() ? t('reports') : 'Dashboard' ?>
+                <?= t('reports') ?>
             </a>
+            <?php endif; ?>
             
             <!-- Products & Orders - Only for Product Managers -->
             <?php if (isProductManager()): ?>
@@ -390,7 +392,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
             logoLink.addEventListener('click', function(e) {
                 // Allow default link behavior
                 if (e.target.tagName !== 'A') {
+                    <?php if (isModerator()): ?>
                     window.location.href = 'dashboard.php';
+                    <?php else: ?>
+                    window.location.href = 'products.php';
+                    <?php endif; ?>
                 }
             });
         }

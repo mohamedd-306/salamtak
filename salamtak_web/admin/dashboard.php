@@ -12,7 +12,13 @@ if (isset($_GET['lang'])) {
     redirect($redirect_url);
 }
 
-if (!isLoggedIn() || !isAdmin()) {
+// Check if user is logged in and is a moderator (reports only)
+if (!isLoggedIn() || !isModerator()) {
+    // Redirect product managers to products page
+    if (isProductManager()) {
+        redirect('products.php');
+    }
+    // Redirect non-admins to login
     redirect('../login.php');
 }
 
