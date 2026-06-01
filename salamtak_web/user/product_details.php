@@ -226,6 +226,13 @@ $fullDescription = $product['description'] ?? 'Professional safety equipment for
             border-radius: 20px;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             padding: 40px;
+            display: block;
+        }
+        
+        /* Base64 image support */
+        .product-main-image[src^="data:image"] {
+            object-fit: contain;
+            background: #ffffff;
         }
 
         .product-badge-detail {
@@ -661,9 +668,10 @@ $fullDescription = $product['description'] ?? 'Professional safety equipment for
 
         <div class="product-detail-grid">
             <div class="product-image-section">
-                <img src="<?= htmlspecialchars($imageUrl) ?>?v=<?= time() ?>" 
+                <img src="<?= htmlspecialchars($imageUrl) ?>" 
                      alt="<?= htmlspecialchars($product['name']) ?>" 
                      class="product-main-image"
+                     loading="lazy"
                      onerror="this.src='../assets/products/placeholder.svg'">
             </div>
 

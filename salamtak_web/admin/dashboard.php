@@ -795,6 +795,7 @@ function formatDate($date) {
                     </svg>
                     Dashboard
                 </a>
+                <?php if (isProductManager()): ?>
                 <a href="products.php" class="landing-nav-link">
                     Orders
                 </a>
@@ -813,6 +814,7 @@ function formatDate($date) {
                     </svg>
                     Add Product
                 </a>
+                <?php endif; ?>
                 
                 <!-- Profile Dropdown -->
                 <div class="profile-dropdown" id="profileDropdown">

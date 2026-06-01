@@ -92,43 +92,6 @@ function getStatusBg($status) {
             margin: 0 auto;
         }
         
-        /* Back Arrow Button */
-        .back-arrow {
-            position: fixed;
-            top: 90px;
-            left: 40px;
-            width: 52px;
-            height: 52px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 100;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .back-arrow:hover {
-            background: #0f1d3f;
-            border-color: #0f1d3f;
-            transform: translateX(-4px);
-        }
-        
-        .back-arrow:hover svg {
-            color: white;
-        }
-        
-        .back-arrow svg {
-            color: #0f1d3f;
-            width: 24px;
-            height: 24px;
-            transition: all 0.3s;
-        }
-        
         /* Page Header */
         .page-header {
             background: white;
@@ -474,24 +437,11 @@ function getStatusBg($status) {
             .page-header { flex-direction: column; gap: 16px; }
             .header-actions { width: 100%; }
             .btn { width: 100%; justify-content: center; }
-            .back-arrow {
-                top: 80px;
-                left: 20px;
-                width: 48px;
-                height: 48px;
-            }
         }
     </style>
 </head>
 <body>
     <?php include 'includes/admin_navbar.php'; ?>
-    
-    <!-- Back Arrow -->
-    <a href="dashboard.php" class="back-arrow" title="<?= t('back_to_dashboard') ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-    </a>
     
     <div class="container">
         <!-- Page Header -->
