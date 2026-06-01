@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../theme.dart';
+import '../config/maps_config.dart';
 
 class LocationResult {
   final LatLng latLng;
   final String address;
   LocationResult({required this.latLng, required this.address});
 }
-
-// ─── Replace with your Google Maps API key ───────────────────────────────────
-// Get one at: https://console.cloud.google.com → APIs & Services
-// Enable: Maps JavaScript API
-const String kGoogleMapsApiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
-const bool _hasApiKey = kGoogleMapsApiKey != 'YOUR_GOOGLE_MAPS_API_KEY';
-// ─────────────────────────────────────────────────────────────────────────────
 
 class LocationPickerScreen extends StatefulWidget {
   final LatLng? initialLocation;
@@ -24,8 +18,8 @@ class LocationPickerScreen extends StatefulWidget {
 }
 
 class _LocationPickerScreenState extends State<LocationPickerScreen> {
-  // Default: Cairo, Egypt
-  static const LatLng _defaultLocation = LatLng(30.0444, 31.2357);
+  // Default: Cairo, Egypt (from config)
+  static const LatLng _defaultLocation = LatLng(kDefaultLatitude, kDefaultLongitude);
 
   GoogleMapController? _mapController;
   late LatLng _selectedLocation;
@@ -197,7 +191,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
           ),
 
           // Map or fallback
-          Expanded(child: _hasApiKey ? _buildMap() : _buildNoKeyFallback()),
+          Expanded(child: hasApiKey ? _buildMap() : _buildNoKeyFallback()),
 
           // Bottom bar
           _buildBottomBar(),
@@ -478,44 +472,12 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: [
-                    _CityChip(
-                      name: 'Cairo',
-                      lat: 30.0444,
-                      lng: 31.2357,
-                      onTap: _selectCity,
-                    ),
-                    _CityChip(
-                      name: 'Alexandria',
-                      lat: 31.2001,
-                      lng: 29.9187,
-                      onTap: _selectCity,
-                    ),
-                    _CityChip(
-                      name: 'Giza',
-                      lat: 30.0131,
-                      lng: 31.2089,
-                      onTap: _selectCity,
-                    ),
-                    _CityChip(
-                      name: 'Luxor',
-                      lat: 25.6872,
-                      lng: 32.6396,
-                      onTap: _selectCity,
-                    ),
-                    _CityChip(
-                      name: 'Aswan',
-                      lat: 24.0889,
-                      lng: 32.8998,
-                      onTap: _selectCity,
-                    ),
-                    _CityChip(
-                      name: 'Mansoura',
-                      lat: 31.0364,
-                      lng: 31.3807,
-                      onTap: _selectCity,
-                    ),
-                  ],
+                  children: kEgyptianCities.map((city) => _CityChip(
+                    name: city['name'],
+                    lat: city['lat'],
+                    lng: city['lng'],
+                    onTap: _selectCity,
+                  )).toList(),
                 ),
               ],
             ),

@@ -23,20 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Admin login with Work ID (9 digits)
         if ($user_type === 'admin') {
-            // Check hardcoded admin
-            if ($identifier === '221007689' && $password === '631663') {
-                $_SESSION['user_id'] = 'admin-221007689';
+            // Check hardcoded admin credentials (synchronized with mobile app)
+            $adminData = verifyAdminCredentials($identifier, $password);
+            
+            if ($adminData) {
+                // Set session variables with admin role
+                $_SESSION['user_id'] = 'admin-' . $identifier;
                 $_SESSION['user_type'] = 'admin';
+                $_SESSION['admin_role'] = $adminData['role']; // 'moderator' or 'product_manager'
                 $_SESSION['work_id'] = $identifier;
-                $_SESSION['name'] = 'System Administrator';
-                redirect('admin/dashboard.php');
-            }
-            // Check for old hardcoded admin (for backward compatibility)
-            elseif ($identifier === '12345678901234' && $password === 'admin123456') {
-                $_SESSION['user_id'] = 'admin-hardcoded';
-                $_SESSION['user_type'] = 'admin';
-                $_SESSION['work_id'] = $identifier;
-                $_SESSION['name'] = 'System Administrator';
+                $_SESSION['name'] = $adminData['name'];
                 redirect('admin/dashboard.php');
             }
             // Check Firebase for admin with Work ID
@@ -50,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($user && ($user['userType'] ?? '') === 'admin') {
                         $_SESSION['user_id'] = $uid;
                         $_SESSION['user_type'] = 'admin';
+                        $_SESSION['admin_role'] = $user['adminRole'] ?? 'product_manager';
                         $_SESSION['work_id'] = $user['workId'] ?? $identifier;
                         $_SESSION['name'] = $user['name'] ?? 'Administrator';
                         redirect('admin/dashboard.php');

@@ -89,6 +89,10 @@ class _AdminNavigationState extends State<AdminNavigation> {
     // Rebuild navigation items if context changes (for localization)
     _buildNavigationItems();
 
+    // Get screen width for responsive sizing
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 360;
+
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: Container(
@@ -112,8 +116,8 @@ class _AdminNavigationState extends State<AdminNavigation> {
           backgroundColor: Colors.white,
           selectedItemColor: AppTheme.primary,
           unselectedItemColor: AppTheme.textSecondary,
-          selectedFontSize: 12,
-          unselectedFontSize: 11,
+          selectedFontSize: isSmallScreen ? 10 : 12,
+          unselectedFontSize: isSmallScreen ? 9 : 11,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
           elevation: 0,
           items: _navItems,
