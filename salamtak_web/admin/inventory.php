@@ -312,6 +312,12 @@ foreach ($reviews_by_product as $productId => $reviews) {
             border: 2px solid #e5e7eb;
         }
         
+        /* Ensure base64 images display correctly */
+        .product-img[src^="data:image"] {
+            object-fit: cover;
+            padding: 6px;
+        }
+        
         .product-name {
             font-size: 16px;
             font-weight: 700;
@@ -561,7 +567,11 @@ foreach ($reviews_by_product as $productId => $reviews) {
                             ?>
                             <tr>
                                 <td>
-                                    <img src="<?= htmlspecialchars($imageUrl) ?>" alt="Product" class="product-img" onerror="this.src='../assets/products/placeholder.svg'">
+                                    <img src="<?= htmlspecialchars($imageUrl) ?>" 
+                                         alt="<?= htmlspecialchars($product['name']) ?>" 
+                                         class="product-img"
+                                         loading="lazy"
+                                         onerror="this.onerror=null; this.src='../assets/products/placeholder.svg';">
                                 </td>
                                 <td>
                                     <div class="product-name"><?= htmlspecialchars($product['name']) ?></div>

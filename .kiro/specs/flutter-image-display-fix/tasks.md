@@ -18,7 +18,7 @@
     - Mark task complete when test is written, run, and failure is documented
     - _Requirements: 1.1, 2.1, 2.2_
   
-  - [ ] 1.2 Test product with Firebase Storage URL displays network image instead of placeholder
+  - [x] 1.2 Test product with Firebase Storage URL displays network image instead of placeholder
     - Create test product with `image: "https://firebasestorage.googleapis.com/.../product.jpg"` in Firestore
     - Test that ProductCard displays the image from network URL (Bug Condition from design)
     - Expected behavior: Image should load from Firebase Storage URL (Property 1 from design)
@@ -28,7 +28,7 @@
     - Mark task complete when test is written, run, and failure is documented
     - _Requirements: 1.2, 2.2, 2.5_
   
-  - [ ] 1.3 Test product with non-matching name displays database image instead of placeholder
+  - [x] 1.3 Test product with non-matching name displays database image instead of placeholder
     - Create test product named "gloves" with `image: "assets/products/gloves.jpeg"` in Firestore
     - Test that ProductCard displays the image from `product.image` field (Bug Condition from design)
     - Expected behavior: Image should load from `assets/products/gloves.jpeg` (Property 1 from design)
@@ -38,7 +38,7 @@
     - Mark task complete when test is written, run, and failure is documented
     - _Requirements: 1.1, 2.1, 2.2_
   
-  - [ ] 1.4 Test report image on emulator loads from correct URL
+  - [x] 1.4 Test report image on emulator loads from correct URL
     - Create test report with `imagePath: "uploads/report_123.jpg"` in Firestore
     - Test that ReportImageWidget constructs accessible URL (Bug Condition from design)
     - Expected behavior: Image should load successfully or display error placeholder if server not running (Property 2 from design)

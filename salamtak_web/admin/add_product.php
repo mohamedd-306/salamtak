@@ -853,9 +853,10 @@ $products = queryFirestoreCollection('products');
             <h2><?= t('current_products') ?> (<?= count($products) ?>)</h2>
             <?php foreach ($products as $product): ?>
                 <div class="product-item">
-                    <img src="<?= htmlspecialchars(getProductImageUrl($product)) ?>?v=<?= time() ?>" 
+                    <img src="<?= htmlspecialchars(getProductImageUrl($product)) ?>" 
                          alt="<?= htmlspecialchars($product['name']) ?>" 
-                         onerror="this.src='../assets/products/placeholder.svg'">
+                         loading="lazy"
+                         onerror="this.onerror=null; this.src='../assets/products/placeholder.svg';">
                     <div class="product-info">
                         <strong><?= htmlspecialchars($product['name']) ?></strong><br>
                         <span style="color: #666;">EGP <?= number_format($product['price'], 2) ?> | Stock: <?= $product['stock'] ?> | <?= htmlspecialchars($product['category'] ?? 'N/A') ?></span>

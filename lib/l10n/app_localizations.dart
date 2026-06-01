@@ -205,6 +205,8 @@ class AppLocalizations {
       isArabic
           ? 'اضغط لفتح خرائط جوجل وتحديد موقع المشكلة'
           : 'Tap to open Google Maps and pin the issue location';
+  String get pleaseUploadPhoto =>
+      isArabic ? 'يرجى تحميل صورة' : 'Please upload a photo';
   String get locationSelected =>
       isArabic ? 'تم تحديد الموقع' : 'Location selected';
   String get describeTheProblem =>
@@ -230,8 +232,8 @@ class AppLocalizations {
   // Admin
   String get admin => isArabic ? 'مدير' : 'Admin';
   String get controlPanel => isArabic ? 'لوحة التحكم' : 'Control Panel';
-  String get reportsManagement => isArabic ? 'إدارة البلاغات' : 'Reports Management';
-  String get reports => isArabic ? 'البلاغات' : 'Reports';
+  String get reportsManagement =>
+      isArabic ? 'إدارة البلاغات' : 'Reports Management';
   String get total => isArabic ? 'الإجمالي' : 'Total';
   String get active => isArabic ? 'نشط' : 'Active';
   String get done => isArabic ? 'تم' : 'Done';

@@ -331,6 +331,13 @@ $isRTL = $lang === 'ar';
             object-fit: contain;
             padding: 16px;
             transition: transform 0.6s;
+            background: white;
+        }
+        
+        /* Ensure base64 images display correctly */
+        .product-image[src^="data:image"] {
+            object-fit: cover;
+            padding: 8px;
         }
         
         .product-card:hover .product-image {
@@ -671,47 +678,19 @@ $isRTL = $lang === 'ar';
         <div class="products-grid">
             <?php foreach ($products as $product): ?>
                 <?php 
-                $productName = strtolower($product['name']);
-                $imageUrl = '';
-                $description = '';
-                $category = t('safety_equipment');
-                
-                if (strpos($productName, 'vest') !== false) {
-                    $imageUrl = 'assets/products/vest.jpeg';
-                    $description = t('vest_description');
-                    $category = t('safety_wear');
-                } elseif (strpos($productName, 'ear') !== false || strpos($productName, 'muff') !== false) {
-                    $imageUrl = 'assets/products/earmuffs.jpeg';
-                    $description = t('earmuffs_description');
-                    $category = t('hearing_protection');
-                } elseif (strpos($productName, 'jacket') !== false) {
-                    $imageUrl = 'assets/products/jacket.jpeg';
-                    $description = t('jacket_description');
-                    $category = t('safety_wear');
-                } elseif (strpos($productName, 'hard hat') !== false) {
-                    $imageUrl = 'assets/products/hardhat.jpeg';
-                    $description = t('hardhat_description');
-                    $category = t('head_protection');
-                } elseif (strpos($productName, 'helmet') !== false) {
-                    $imageUrl = 'assets/products/helmet.jpeg';
-                    $description = t('helmet_description');
-                    $category = t('head_protection');
-                } elseif (strpos($productName, 'boots') !== false) {
-                    $imageUrl = 'assets/products/boots.jpeg';
-                    $description = t('boots_description');
-                    $category = t('footwear');
-                } else {
-                    $imageUrl = 'assets/products/placeholder.svg';
-                    $description = $product['description'] ?? t('default_product_description');
-                }
+                // Use helper function to get image URL
+                $imageUrl = getProductImageUrl($product);
+                $description = $product['description'] ?? 'Professional safety equipment for workplace protection.';
+                $category = $product['category'] ?? 'Safety Equipment';
                 ?>
-                <div class="product-card">
+                <div class="product-card" data-category="<?= strtolower(str_replace(' ', '-', $category)) ?>">
                     <a href="user/product_details.php?id=<?= htmlspecialchars($product['id']) ?>" style="text-decoration: none; color: inherit;">
                         <div class="product-image-wrapper">
-                            <img src="<?= htmlspecialchars($imageUrl) ?>?v=<?= time() ?>" 
+                            <img src="<?= htmlspecialchars($imageUrl) ?>" 
                                  alt="<?= htmlspecialchars($product['name']) ?>" 
                                  class="product-image"
-                                 onerror="this.src='https://via.placeholder.com/400x400/0f1d3f/ffffff?text=<?= urlencode($product['name']) ?>'">>
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='assets/products/placeholder.svg'; console.error('Failed to load image for: <?= htmlspecialchars($product['name']) ?>')">
                         </div>
                         <div class="product-info">
                             <div class="product-category"><?= htmlspecialchars($category) ?></div>
@@ -791,26 +770,27 @@ $isRTL = $lang === 'ar';
             const productCards = document.querySelectorAll('.product-card');
             const productsCount = document.querySelector('.products-count');
             
-            filterTags.forEach(tag => {
+            filterTags.forEach((tag, index) => {
                 tag.addEventListener('click', function() {
                     // Remove active class from all tags
                     filterTags.forEach(t => t.classList.remove('active'));
                     // Add active class to clicked tag
                     this.classList.add('active');
                     
-                    const filterText = this.textContent.trim();
+                    const filterText = this.textContent.trim().toLowerCase();
                     let visibleCount = 0;
                     
                     productCards.forEach(card => {
-                        const category = card.querySelector('.product-category').textContent.trim();
+                        const category = card.getAttribute('data-category');
+                        const categoryText = card.querySelector('.product-category').textContent.trim().toLowerCase();
                         
-                        // Check if filter matches "All Products" in any language
-                        const isAllProducts = this.classList.contains('active') && filterTags[0] === this;
+                        // First filter tag is "All Products"
+                        const isAllProducts = index === 0;
                         
                         if (isAllProducts) {
                             card.style.display = 'block';
                             visibleCount++;
-                        } else if (category === filterText) {
+                        } else if (category && (category.includes(filterText.replace(/\s+/g, '-')) || categoryText.includes(filterText))) {
                             card.style.display = 'block';
                             visibleCount++;
                         } else {
@@ -818,9 +798,10 @@ $isRTL = $lang === 'ar';
                         }
                     });
                     
-                    // Update products count with proper translation
-                    const productsLabel = '<?= t('products_available') ?>';
-                    productsCount.textContent = visibleCount + ' ' + productsLabel;
+                    // Update products count
+                    const countText = productsCount.textContent;
+                    const suffix = countText.replace(/^\d+\s*/, ''); // Get everything after the number
+                    productsCount.textContent = visibleCount + ' ' + suffix;
                 });
             });
         });

@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:provider/provider.dart';
 import 'package:latlong2/latlong.dart' as latlong2;
+import 'package:geolocator/geolocator.dart';
 import '../../services/database_service.dart';
 import '../../services/image_classifier.dart';
 import '../../models/report.dart';
@@ -46,6 +47,50 @@ class _ProblemReportScreenState extends State<ProblemReportScreen> {
   void initState() {
     super.initState();
     _initSpeech();
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    try {
+      // Check if location services are enabled
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        debugPrint('Location services are disabled');
+        return;
+      }
+
+      // Check location permission
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          debugPrint('Location permissions are denied');
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        debugPrint('Location permissions are permanently denied');
+        return;
+      }
+
+      // Get current position
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      setState(() {
+        _selectedLocation = LatLng(position.latitude, position.longitude);
+        _locationAddress =
+            'Current Location: ${position.latitude.toStringAsFixed(5)}, ${position.longitude.toStringAsFixed(5)}';
+      });
+
+      debugPrint(
+        '✓ Current location detected: ${position.latitude}, ${position.longitude}',
+      );
+    } catch (e) {
+      debugPrint('Error getting current location: $e');
+    }
   }
 
   @override
@@ -87,18 +132,82 @@ class _ProblemReportScreenState extends State<ProblemReportScreen> {
             _descriptionController.text = result.recognizedWords;
           });
         },
-        localeId: localeId,
-        listenMode: stt.ListenMode.dictation,
-        cancelOnError: false,
-        partialResults: true,
+        listenOptions: stt.SpeechListenOptions(
+          localeId: localeId,
+          listenMode: stt.ListenMode.dictation,
+          cancelOnError: false,
+          partialResults: true,
+        ),
       );
     }
   }
 
   Future<void> _pickImage() async {
+    // Show bottom sheet with camera and gallery options
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder:
+          (context) => Container(
+            decoration: const BoxDecoration(
+              color: AppTheme.cardBg,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppTheme.border,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Choose Photo Source',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ImageSourceOption(
+                        icon: Icons.camera_alt_rounded,
+                        label: 'Camera',
+                        color: AppTheme.primary,
+                        onTap: () => Navigator.pop(context, ImageSource.camera),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _ImageSourceOption(
+                        icon: Icons.photo_library_rounded,
+                        label: 'Gallery',
+                        color: AppTheme.success,
+                        onTap:
+                            () => Navigator.pop(context, ImageSource.gallery),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+              ],
+            ),
+          ),
+    );
+
+    if (source == null) return;
+
     final picker = ImagePicker();
     final picked = await picker.pickImage(
-      source: ImageSource.gallery,
+      source: source,
       maxWidth: 1920,
       maxHeight: 1080,
       imageQuality: 85,
@@ -217,6 +326,13 @@ class _ProblemReportScreenState extends State<ProblemReportScreen> {
   Future<void> _submitReport() async {
     final l10n = AppLocalizations.of(context);
     if (!_formKey.currentState!.validate()) return;
+
+    // Check if photo is uploaded
+    if (_imageFile == null) {
+      _showSnack(l10n.pleaseUploadPhoto, AppTheme.danger);
+      return;
+    }
+
     if (_selectedLocation == null) {
       _showSnack(l10n.pleaseSelectLocation, AppTheme.warning);
       return;
@@ -761,6 +877,56 @@ class _SectionLabel extends StatelessWidget {
           ),
         ],
       ],
+    );
+  }
+}
+
+class _ImageSourceOption extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _ImageSourceOption({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color.withValues(alpha: 0.1),
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, color: color, size: 32),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -195,38 +195,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Stats grid
-                            GridView.count(
-                              crossAxisCount: 2,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                              childAspectRatio: 1.5,
+                            // Stats grid - using Row/Column for better control
+                            Column(
                               children: [
-                                _StatCard(
-                                  label: l10n.total,
-                                  value: _total,
-                                  icon: Icons.description_rounded,
-                                  color: AppTheme.primary,
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _StatCard(
+                                        label: l10n.total,
+                                        value: _total,
+                                        icon: Icons.description_rounded,
+                                        color: AppTheme.primary,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: _StatCard(
+                                        label: l10n.pending,
+                                        value: _pending,
+                                        icon: Icons.hourglass_top_rounded,
+                                        color: AppTheme.warning,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                _StatCard(
-                                  label: l10n.pending,
-                                  value: _pending,
-                                  icon: Icons.hourglass_top_rounded,
-                                  color: AppTheme.warning,
-                                ),
-                                _StatCard(
-                                  label: l10n.inProgress,
-                                  value: _inProgress,
-                                  icon: Icons.autorenew_rounded,
-                                  color: AppTheme.purple,
-                                ),
-                                _StatCard(
-                                  label: l10n.resolved,
-                                  value: _resolved,
-                                  icon: Icons.check_circle_rounded,
-                                  color: AppTheme.success,
+                                const SizedBox(height: 12),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _StatCard(
+                                        label: l10n.inProgress,
+                                        value: _inProgress,
+                                        icon: Icons.autorenew_rounded,
+                                        color: AppTheme.purple,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: _StatCard(
+                                        label: l10n.resolved,
+                                        value: _resolved,
+                                        icon: Icons.check_circle_rounded,
+                                        color: AppTheme.success,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -252,9 +265,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         .findAncestorStateOfType<
                                           State<StatefulWidget>
                                         >();
-                                if (homeState != null &&
-                                    homeState is State &&
-                                    homeState.mounted) {
+                                if (homeState != null && homeState.mounted) {
                                   // Access the parent UserHomeScreen's navigation
                                   final userHomeState =
                                       context
@@ -303,7 +314,8 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      height: 90,
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: AppTheme.cardBg,
         borderRadius: BorderRadius.circular(16),
@@ -320,34 +332,38 @@ class _StatCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(icon, color: color, size: 20),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(icon, color: color, size: 20),
+              ),
               Text(
                 value.toString(),
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
                   color: color,
-                ),
-              ),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppTheme.textSecondary,
-                  fontWeight: FontWeight.w500,
+                  height: 1.0,
                 ),
               ),
             ],
+          ),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppTheme.textSecondary,
+              fontWeight: FontWeight.w600,
+              height: 1.0,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

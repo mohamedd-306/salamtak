@@ -65,8 +65,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     exit();
 }
 
-// Get all products
-$products = queryFirestoreCollection('products');
+// Get all products with error handling
+try {
+    $products = queryFirestoreCollection('products');
+    if ($products === null || $products === false) {
+        $products = [];
+        error_log('Failed to fetch products from Firestore');
+    }
+} catch (Exception $e) {
+    error_log('Error fetching products: ' . $e->getMessage());
+    $products = [];
+}
 
 // Get user's cart count (only if logged in)
 $cart_count = 0;
@@ -97,6 +106,47 @@ if ($isUserLoggedIn) {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: #f8f9fa;
             overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f1d3f 0%, #1a2d5a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #FBBF24;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
         }
 
         /* Navbar Styles */
@@ -382,6 +432,13 @@ if ($isUserLoggedIn) {
             object-fit: contain;
             padding: 16px;
             transition: transform 0.6s;
+            background: white;
+        }
+        
+        /* Ensure base64 images display correctly */
+        .product-image[src^="data:image"] {
+            object-fit: cover;
+            padding: 8px;
         }
         
         .product-card:hover .product-image {
@@ -573,6 +630,12 @@ if ($isUserLoggedIn) {
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text"><?= t('loading_products') ?? 'Loading Products...' ?></div>
+    </div>
+    
     <?php include 'includes/header.php'; ?>
     
     <!-- Hero Section -->
@@ -645,10 +708,11 @@ if ($isUserLoggedIn) {
                 <div class="product-card" data-category="<?= strtolower(str_replace(' ', '-', $category)) ?>">
                     <a href="product_details.php?id=<?= htmlspecialchars($product['id']) ?>" style="text-decoration: none; color: inherit;">
                         <div class="product-image-wrapper">
-                            <img src="<?= htmlspecialchars($imageUrl) ?>?v=<?= time() ?>" 
+                            <img src="<?= htmlspecialchars($imageUrl) ?>" 
                                  alt="<?= htmlspecialchars($product['name']) ?>" 
                                  class="product-image"
-                                 onerror="this.src='../assets/products/placeholder.svg'">
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='../assets/products/placeholder.svg'; console.error('Failed to load image for: <?= htmlspecialchars($product['name']) ?>')">
                         </div>
                         <div class="product-info">
                             <div class="product-category"><?= htmlspecialchars($category) ?></div>
@@ -686,6 +750,14 @@ if ($isUserLoggedIn) {
     </div>
 
     <script>
+        // Hide loading screen when page is fully loaded
+        window.addEventListener('load', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+            }
+        });
+        
         function increaseQty(btn) {
             const input = btn.parentElement.querySelector('.quantity-input');
             const currentValue = parseInt(input.value);

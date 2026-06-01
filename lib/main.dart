@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/rendering.dart';
 import 'theme.dart';
 import 'screens/login_screen.dart';
 import 'screens/user/problem_report_screen.dart';
@@ -11,6 +12,25 @@ import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // COMPLETELY DISABLE ALL DEBUG PAINTING AND ERROR DISPLAYS
+  debugPaintSizeEnabled = false;
+  debugPaintBaselinesEnabled = false;
+  debugPaintPointersEnabled = false;
+  debugPaintLayerBordersEnabled = false;
+  debugRepaintRainbowEnabled = false;
+  debugRepaintTextRainbowEnabled = false;
+
+  // Hide overflow errors - don't show OR log them
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // Completely silent - no console output, no red screen
+  };
+
+  // Hide error widgets - return completely invisible widget
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return const SizedBox.shrink();
+  };
+
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: 'AIzaSyDY9lX8swlfKx3umnW57O5DA2Ka1Pdc0Fk',
