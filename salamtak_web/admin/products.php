@@ -1,7 +1,13 @@
 <?php
 require_once '../config.php';
 
-if (!isLoggedIn() || !isAdmin()) {
+// Check if user is logged in and is a product manager
+if (!isLoggedIn() || !isProductManager()) {
+    // Redirect moderators to dashboard (reports)
+    if (isModerator()) {
+        redirect('dashboard.php');
+    }
+    // Redirect non-admins to login
     redirect('../login.php');
 }
 
