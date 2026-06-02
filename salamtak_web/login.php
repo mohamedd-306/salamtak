@@ -195,8 +195,8 @@ $isRTL = $lang === 'ar';
         }
         .login-card {
             width: 100%;
-            max-width: 520px;
-            padding: 32px 28px !important;
+            max-width: 800px;
+            padding: 40px 48px !important;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;
@@ -204,39 +204,39 @@ $isRTL = $lang === 'ar';
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .login-card h2 {
-            font-size: 24px !important;
-            margin-bottom: 8px !important;
+            font-size: 32px !important;
+            margin-bottom: 12px !important;
             color: var(--text-primary);
         }
         .login-card .subtitle {
-            font-size: 14px !important;
-            margin-bottom: 16px !important;
+            font-size: 16px !important;
+            margin-bottom: 24px !important;
         }
         .login-form .form-group {
-            margin-bottom: 14px !important;
+            margin-bottom: 20px !important;
         }
         .login-form .form-group label {
-            font-size: 12px !important;
-            margin-bottom: 4px !important;
+            font-size: 14px !important;
+            margin-bottom: 8px !important;
         }
         .login-form input {
-            padding: 8px 12px !important;
-            font-size: 13px !important;
+            padding: 14px 16px !important;
+            font-size: 15px !important;
         }
         .login-form button {
-            padding: 10px 20px !important;
-            font-size: 14px !important;
-            margin-top: 4px !important;
+            padding: 16px 24px !important;
+            font-size: 16px !important;
+            margin-top: 8px !important;
             border-radius: 12px !important;
         }
         .form-footer {
-            margin-top: 12px !important;
-            padding-top: 12px !important;
+            margin-top: 20px !important;
+            padding-top: 20px !important;
         }
         .form-footer {
             text-align: center;
-            margin-top: 20px !important;
-            padding-top: 20px !important;
+            margin-top: 28px !important;
+            padding-top: 24px !important;
             border-top: 2px solid var(--border-light);
         }
         .form-footer a {
@@ -255,9 +255,9 @@ $isRTL = $lang === 'ar';
             color: var(--primary);
         }
         .alert {
-            padding: 10px 12px !important;
-            font-size: 13px !important;
-            margin-bottom: 12px !important;
+            padding: 14px 16px !important;
+            font-size: 15px !important;
+            margin-bottom: 20px !important;
         }
     </style>
 </head>
@@ -273,9 +273,9 @@ $isRTL = $lang === 'ar';
     <div class="login-container">
         <div class="login-card">
             <!-- Title and Tagline -->
-            <div style="text-align: center; margin-bottom: 24px;">
-                <h1 style="font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;"><?= t('app_name') ?></h1>
-                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 0;"><?= t('tagline') ?></p>
+            <div style="text-align: center; margin-bottom: 32px;">
+                <h1 style="font-size: 36px; font-weight: 800; color: var(--text-primary); margin-bottom: 12px;"><?= t('app_name') ?></h1>
+                <p style="font-size: 16px; color: var(--text-secondary); margin-bottom: 0;"><?= t('tagline') ?></p>
             </div>
             
             <h2><?= t('welcome_back') ?></h2>

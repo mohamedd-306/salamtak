@@ -164,8 +164,8 @@ $isRTL = $lang === 'ar';
         }
         .signup-card {
             width: 100%;
-            max-width: 520px;
-            padding: 32px 28px !important;
+            max-width: 800px;
+            padding: 40px 48px !important;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;
@@ -173,40 +173,40 @@ $isRTL = $lang === 'ar';
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .signup-card h1 {
-            font-size: 28px;
+            font-size: 36px;
             font-weight: 800;
             color: var(--text-primary);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             text-align: center;
         }
         .signup-card .subtitle {
-            font-size: 14px;
+            font-size: 16px;
             color: var(--text-secondary);
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
         .signup-form .form-group {
-            margin-bottom: 14px !important;
+            margin-bottom: 20px !important;
         }
         .signup-form .form-group label {
-            font-size: 12px !important;
-            margin-bottom: 4px !important;
+            font-size: 14px !important;
+            margin-bottom: 8px !important;
         }
         .signup-form input,
         .signup-form textarea {
-            padding: 8px 12px !important;
-            font-size: 13px !important;
+            padding: 14px 16px !important;
+            font-size: 15px !important;
         }
         .signup-form button {
-            padding: 10px 20px !important;
-            font-size: 14px !important;
-            margin-top: 4px !important;
+            padding: 16px 24px !important;
+            font-size: 16px !important;
+            margin-top: 8px !important;
             border-radius: 12px !important;
         }
         .form-footer {
             text-align: center;
-            margin-top: 20px !important;
-            padding-top: 20px !important;
+            margin-top: 28px !important;
+            padding-top: 24px !important;
             border-top: 2px solid var(--border-light);
         }
         .form-footer a {
@@ -225,9 +225,9 @@ $isRTL = $lang === 'ar';
             color: var(--primary);
         }
         .alert {
-            padding: 10px 12px !important;
-            font-size: 13px !important;
-            margin-bottom: 12px !important;
+            padding: 14px 16px !important;
+            font-size: 15px !important;
+            margin-bottom: 20px !important;
         }
     </style>
 </head>
@@ -243,9 +243,9 @@ $isRTL = $lang === 'ar';
     <div class="signup-container">
         <div class="signup-card">
             <!-- Title and Tagline -->
-            <div style="text-align: center; margin-bottom: 24px;">
-                <h1 style="font-size: 28px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;"><?= t('create_account') ?></h1>
-                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 0;">Join thousands making roads safer</p>
+            <div style="text-align: center; margin-bottom: 32px;">
+                <h1 style="font-size: 36px; font-weight: 800; color: var(--text-primary); margin-bottom: 12px;"><?= t('create_account') ?></h1>
+                <p style="font-size: 16px; color: var(--text-secondary); margin-bottom: 0;">Join thousands making roads safer</p>
             </div>
             
             <?php if ($error): ?>
