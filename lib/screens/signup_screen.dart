@@ -153,9 +153,9 @@ class _SignupScreenState extends State<SignupScreen> {
           Expanded(
             child: Container(
               color: Colors.white,
-              child: Center(
+              child: SafeArea(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 450),
                     child: Form(
@@ -169,31 +169,31 @@ class _SignupScreenState extends State<SignupScreen> {
                             Center(
                               child: Image.asset(
                                 'assets/logof.png',
-                                width: 80,
-                                height: 80,
+                                width: 60,
+                                height: 60,
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            const SizedBox(height: 24),
+                            const SizedBox(height: 16),
                           ],
 
                           Text(
                             l10n.createAccount,
                             style: const TextStyle(
-                              fontSize: 32,
+                              fontSize: 28,
                               fontWeight: FontWeight.w800,
                               color: AppTheme.textPrimary,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 6),
                           const Text(
                             'Join thousands making roads safer',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: AppTheme.textSecondary,
                             ),
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 24),
 
                           // National ID field
                           TextFormField(
@@ -225,7 +225,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
 
                           // Full Name field
                           TextFormField(
@@ -249,7 +249,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
 
                           // Email field
                           TextFormField(
@@ -276,7 +276,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
 
                           // Phone field
                           TextFormField(
@@ -304,7 +304,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
 
                           // Address field
                           TextFormField(
@@ -331,7 +331,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
 
                           // Password field
                           TextFormField(
@@ -368,7 +368,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
 
                           // Confirm Password field
                           TextFormField(
@@ -406,7 +406,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 24),
 
                           // Signup button
                           SizedBox(
@@ -452,7 +452,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       ),
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 20),
 
                           // Divider
                           Row(
@@ -473,7 +473,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               Expanded(child: Divider(color: Colors.grey[300])),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 20),
 
                           // Sign in button
                           SizedBox(

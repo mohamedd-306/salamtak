@@ -167,9 +167,9 @@ class _LoginScreenState extends State<LoginScreen> {
           Expanded(
             child: Container(
               color: Colors.white,
-              child: Center(
+              child: SafeArea(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 450),
                     child: Form(
@@ -210,24 +210,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             l10n.welcomeBack,
                             style: const TextStyle(
-                              fontSize: 32,
+                              fontSize: 28,
                               fontWeight: FontWeight.w800,
                               color: AppTheme.textPrimary,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 6),
                           Text(
                             l10n.signInWithNationalId,
                             style: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: AppTheme.textSecondary,
                             ),
                           ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 24),
 
                           // Login Type Radio Buttons
                           Container(
-                            padding: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
                               borderRadius: BorderRadius.circular(12),
@@ -240,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     title: const Text(
                                       'User',
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -258,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     title: const Text(
                                       'Admin',
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -274,7 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 20),
 
                           // National ID field
                           TextFormField(
@@ -317,7 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 16),
 
                           // Password field
                           TextFormField(
@@ -354,7 +354,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 24),
 
                           // Login button
                           SizedBox(
@@ -392,7 +392,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 20),
 
                           // Divider
                           Row(
@@ -413,7 +413,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Expanded(child: Divider(color: Colors.grey[300])),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 20),
 
                           // Sign up button
                           SizedBox(

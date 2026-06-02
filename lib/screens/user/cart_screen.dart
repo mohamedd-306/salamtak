@@ -212,6 +212,7 @@ class CartScreen extends StatelessWidget {
                                                   BorderRadius.circular(8),
                                             ),
                                             child: Row(
+                                              mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 IconButton(
                                                   icon: const Icon(
@@ -240,12 +241,12 @@ class CartScreen extends StatelessWidget {
                                                 Container(
                                                   padding:
                                                       const EdgeInsets.symmetric(
-                                                        horizontal: 12,
+                                                        horizontal: 8,
                                                       ),
                                                   child: Text(
                                                     '${item.quantity}',
                                                     style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -271,12 +272,15 @@ class CartScreen extends StatelessWidget {
                                               ],
                                             ),
                                           ),
-                                          const Spacer(),
-                                          Text(
-                                            'EGP ${item.totalPrice.toStringAsFixed(2)}',
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
+                                          const SizedBox(width: 8),
+                                          Flexible(
+                                            child: Text(
+                                              'EGP ${item.totalPrice.toStringAsFixed(2)}',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],

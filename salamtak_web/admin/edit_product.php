@@ -176,7 +176,7 @@ $categories = ['Medical Supplies', 'Emergency Equipment', 'Safety Gear', 'First 
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
