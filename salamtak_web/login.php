@@ -121,19 +121,35 @@ $isRTL = $lang === 'ar';
             box-sizing: border-box;
         }
         
-        :root {
-            --primary: #667EEA;
-            --primary-light: #764BA2;
-            --secondary: #FBBF24;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --border: #e2e8f0;
-        }
-        
         html, body {
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2d3e5f 0%, #3d5278 50%, #2d3e5f 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .page-wrapper {
@@ -151,9 +167,9 @@ $isRTL = $lang === 'ar';
             left: 24px;
             width: 48px;
             height: 48px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -161,77 +177,76 @@ $isRTL = $lang === 'ar';
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            color: white;
+            color: rgba(255, 255, 255, 0.9);
             z-index: 100;
         }
         
         .back-arrow:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.15);
             transform: translateX(-4px);
         }
         
         .login-card {
             width: 100%;
-            max-width: 550px;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
+            max-width: 480px;
+            background: linear-gradient(145deg, #e8e5da 0%, #d9d6cb 100%);
+            border-radius: 32px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
+            padding: 50px 45px;
+            position: relative;
         }
         
-        .card-header {
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
-            padding: 50px 40px 40px;
+        .card-title {
             text-align: center;
-            color: white;
+            margin-bottom: 40px;
         }
         
-        .card-header h1 {
+        .card-title h1 {
             font-size: 36px;
             font-weight: 900;
+            color: #2d3e5f;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
         
-        .card-header p {
-            font-size: 16px;
-            opacity: 0.9;
+        .card-title p {
+            font-size: 15px;
+            color: #6b7280;
             margin-bottom: 20px;
         }
         
-        .card-header h2 {
-            font-size: 24px;
+        .card-title h2 {
+            font-size: 22px;
             font-weight: 700;
-            margin-top: 20px;
-        }
-        
-        .card-body {
-            padding: 40px;
+            color: #4a5568;
+            margin-top: 12px;
         }
         
         .alert {
-            padding: 16px 20px;
+            padding: 14px 18px;
             background: #fee;
             border: 1px solid #fcc;
             border-radius: 12px;
             color: #c00;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 15px;
+            gap: 10px;
+            font-size: 14px;
         }
         
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
         
         .form-group label {
             display: block;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: #4a5568;
             margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .radio-group {
@@ -246,37 +261,39 @@ $isRTL = $lang === 'ar';
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 15px;
-            color: var(--text-secondary);
+            color: #4a5568;
         }
         
         .radio-label input[type="radio"] {
             width: 20px;
             height: 20px;
             cursor: pointer;
-            accent-color: #667EEA;
+            accent-color: #2d3e5f;
         }
         
         .form-control {
             width: 100%;
-            padding: 16px 18px;
-            font-size: 16px;
-            border: 2px solid var(--border);
+            padding: 15px 18px;
+            font-size: 15px;
+            border: none;
             border-radius: 12px;
             transition: all 0.3s;
             font-family: inherit;
-            background: white;
+            background: rgba(255, 255, 255, 0.4);
+            color: #2d3e5f;
+            font-weight: 500;
         }
         
         .form-control:focus {
             outline: none;
-            border-color: #667EEA;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(45, 62, 95, 0.15);
         }
         
         .form-control::placeholder {
-            color: #a0aec0;
+            color: #9ca3af;
         }
         
         .btn {
@@ -285,41 +302,37 @@ $isRTL = $lang === 'ar';
             font-size: 17px;
             font-weight: 700;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 8px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            margin-top: 12px;
+            background: #2d3e5f;
             color: white;
         }
         
-        .btn-primary:hover {
+        .btn:hover {
+            background: #3d4e6f;
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px -10px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 12px 24px -8px rgba(45, 62, 95, 0.4);
         }
         
-        .btn-primary:active {
+        .btn:active {
             transform: translateY(0);
         }
         
         .form-footer {
-            margin-top: 32px;
-            padding-top: 32px;
-            border-top: 2px solid var(--border);
+            margin-top: 28px;
             text-align: center;
             font-size: 15px;
-            color: var(--text-secondary);
+            color: #6b7280;
         }
         
         .form-footer a {
-            color: #667EEA;
+            color: #2d3e5f;
             text-decoration: none;
             font-weight: 700;
             transition: all 0.3s;
@@ -332,18 +345,11 @@ $isRTL = $lang === 'ar';
         @media (max-width: 768px) {
             .login-card {
                 max-width: 100%;
+                padding: 40px 30px;
             }
             
-            .card-header {
-                padding: 40px 30px 30px;
-            }
-            
-            .card-header h1 {
+            .card-title h1 {
                 font-size: 28px;
-            }
-            
-            .card-body {
-                padding: 30px 24px;
             }
             
             .back-arrow {
@@ -365,68 +371,66 @@ $isRTL = $lang === 'ar';
     
     <div class="page-wrapper">
         <div class="login-card">
-            <div class="card-header">
+            <div class="card-title">
                 <h1><?= t('app_name') ?></h1>
                 <p><?= t('tagline') ?></p>
                 <h2><?= t('welcome_back') ?></h2>
             </div>
             
-            <div class="card-body">
-                <?php if ($error): ?>
-                    <div class="alert">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
-                        <?= htmlspecialchars($error) ?>
+            <?php if ($error): ?>
+                <div class="alert">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label><?= t('login_as') ?></label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="user_type" value="user" checked onchange="updateLoginForm()">
+                            <span><?= t('user') ?></span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="user_type" value="admin" onchange="updateLoginForm()">
+                            <span><?= t('admin') ?></span>
+                        </label>
                     </div>
-                <?php endif; ?>
+                </div>
                 
-                <form method="POST">
-                    <div class="form-group">
-                        <label><?= t('login_as') ?></label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="user_type" value="user" checked onchange="updateLoginForm()">
-                                <span><?= t('user') ?></span>
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="user_type" value="admin" onchange="updateLoginForm()">
-                                <span><?= t('admin') ?></span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label id="idLabel"><?= t('national_id') ?></label>
-                        <input type="text" name="identifier" id="identifierInput" class="form-control" 
-                               required maxlength="14" pattern="\d{14}" 
-                               placeholder="<?= t('enter_national_id') ?>" 
-                               value="<?= htmlspecialchars($_POST['identifier'] ?? '') ?>">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><?= t('password') ?></label>
-                        <input type="password" name="password" class="form-control" 
-                               required minlength="6" 
-                               placeholder="<?= t('enter_password') ?>">
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                            <polyline points="10 17 15 12 10 7"/>
-                            <line x1="15" y1="12" x2="3" y2="12"/>
-                        </svg>
-                        <?= t('sign_in') ?>
-                    </button>
-                    
-                    <div class="form-footer">
-                        Don't have an account? <a href="signup.php">Sign Up</a>
-                    </div>
-                </form>
-            </div>
+                <div class="form-group">
+                    <label id="idLabel"><?= t('national_id') ?></label>
+                    <input type="text" name="identifier" id="identifierInput" class="form-control" 
+                           required maxlength="14" pattern="\d{14}" 
+                           placeholder="<?= t('enter_national_id') ?>" 
+                           value="<?= htmlspecialchars($_POST['identifier'] ?? '') ?>">
+                </div>
+                
+                <div class="form-group">
+                    <label><?= t('password') ?></label>
+                    <input type="password" name="password" class="form-control" 
+                           required minlength="6" 
+                           placeholder="<?= t('enter_password') ?>">
+                </div>
+                
+                <button type="submit" class="btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    <?= t('sign_in') ?>
+                </button>
+                
+                <div class="form-footer">
+                    Don't have an account? <a href="signup.php">Sign Up</a>
+                </div>
+            </form>
         </div>
     </div>
     

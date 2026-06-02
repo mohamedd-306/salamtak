@@ -114,19 +114,35 @@ $isRTL = $lang === 'ar';
             box-sizing: border-box;
         }
         
-        :root {
-            --primary: #667EEA;
-            --primary-light: #764BA2;
-            --secondary: #FBBF24;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --border: #e2e8f0;
-        }
-        
         html, body {
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2d3e5f 0%, #3d5278 50%, #2d3e5f 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .page-wrapper {
@@ -144,9 +160,9 @@ $isRTL = $lang === 'ar';
             left: 24px;
             width: 48px;
             height: 48px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -154,58 +170,54 @@ $isRTL = $lang === 'ar';
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            color: white;
+            color: rgba(255, 255, 255, 0.9);
             z-index: 100;
         }
         
         .back-arrow:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.15);
             transform: translateX(-4px);
         }
         
         .signup-card {
             width: 100%;
             max-width: 700px;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
+            background: linear-gradient(145deg, #e8e5da 0%, #d9d6cb 100%);
+            border-radius: 32px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
+            padding: 45px 40px;
+            position: relative;
         }
         
-        .card-header {
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
-            padding: 40px 40px 30px;
+        .card-title {
             text-align: center;
-            color: white;
+            margin-bottom: 35px;
         }
         
-        .card-header h1 {
+        .card-title h1 {
             font-size: 32px;
             font-weight: 900;
+            color: #2d3e5f;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
         
-        .card-header p {
+        .card-title p {
             font-size: 15px;
-            opacity: 0.9;
-        }
-        
-        .card-body {
-            padding: 40px;
+            color: #6b7280;
         }
         
         .alert {
-            padding: 16px 20px;
+            padding: 14px 18px;
             background: #fee;
             border: 1px solid #fcc;
             border-radius: 12px;
             color: #c00;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 15px;
+            gap: 10px;
+            font-size: 14px;
         }
         
         .form-grid {
@@ -224,31 +236,35 @@ $isRTL = $lang === 'ar';
         
         .form-group label {
             display: block;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: #4a5568;
             margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .form-control {
             width: 100%;
-            padding: 16px 18px;
-            font-size: 16px;
-            border: 2px solid var(--border);
+            padding: 15px 18px;
+            font-size: 15px;
+            border: none;
             border-radius: 12px;
             transition: all 0.3s;
             font-family: inherit;
-            background: white;
+            background: rgba(255, 255, 255, 0.4);
+            color: #2d3e5f;
+            font-weight: 500;
         }
         
         .form-control:focus {
             outline: none;
-            border-color: #667EEA;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(45, 62, 95, 0.15);
         }
         
         .form-control::placeholder {
-            color: #a0aec0;
+            color: #9ca3af;
         }
         
         textarea.form-control {
@@ -263,7 +279,7 @@ $isRTL = $lang === 'ar';
             font-size: 17px;
             font-weight: 700;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
@@ -271,33 +287,29 @@ $isRTL = $lang === 'ar';
             justify-content: center;
             gap: 10px;
             margin-top: 24px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            background: #2d3e5f;
             color: white;
         }
         
-        .btn-primary:hover {
+        .btn:hover {
+            background: #3d4e6f;
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px -10px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 12px 24px -8px rgba(45, 62, 95, 0.4);
         }
         
-        .btn-primary:active {
+        .btn:active {
             transform: translateY(0);
         }
         
         .form-footer {
-            margin-top: 32px;
-            padding-top: 32px;
-            border-top: 2px solid var(--border);
+            margin-top: 28px;
             text-align: center;
             font-size: 15px;
-            color: var(--text-secondary);
+            color: #6b7280;
         }
         
         .form-footer a {
-            color: #667EEA;
+            color: #2d3e5f;
             text-decoration: none;
             font-weight: 700;
             transition: all 0.3s;
@@ -310,18 +322,11 @@ $isRTL = $lang === 'ar';
         @media (max-width: 768px) {
             .signup-card {
                 max-width: 100%;
+                padding: 35px 28px;
             }
             
-            .card-header {
-                padding: 30px 24px 24px;
-            }
-            
-            .card-header h1 {
+            .card-title h1 {
                 font-size: 26px;
-            }
-            
-            .card-body {
-                padding: 30px 24px;
             }
             
             .form-grid {
@@ -348,94 +353,92 @@ $isRTL = $lang === 'ar';
     
     <div class="page-wrapper">
         <div class="signup-card">
-            <div class="card-header">
+            <div class="card-title">
                 <h1><?= t('create_account') ?></h1>
                 <p>Join thousands making roads safer</p>
             </div>
             
-            <div class="card-body">
-                <?php if ($error): ?>
-                    <div class="alert">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
-                        <?= htmlspecialchars($error) ?>
+            <?php if ($error): ?>
+                <div class="alert">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+            
+            <form method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><?= t('national_id') ?></label>
+                        <input type="text" name="national_id" class="form-control" 
+                               required maxlength="14" pattern="\d{14}"
+                               placeholder="14-digit National ID"
+                               value="<?= htmlspecialchars($_POST['national_id'] ?? '') ?>">
                     </div>
-                <?php endif; ?>
+                    
+                    <div class="form-group">
+                        <label><?= t('full_name') ?></label>
+                        <input type="text" name="name" class="form-control" 
+                               required minlength="3"
+                               placeholder="Your full name"
+                               value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><?= t('email') ?></label>
+                        <input type="email" name="email" class="form-control" 
+                               required
+                               placeholder="your@email.com"
+                               value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><?= t('phone_number') ?></label>
+                        <input type="tel" name="phone" class="form-control" 
+                               required pattern="\d{10,15}"
+                               placeholder="Phone number"
+                               value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><?= t('password') ?></label>
+                        <input type="password" name="password" class="form-control" 
+                               required minlength="6"
+                               placeholder="Create password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><?= t('confirm_password') ?></label>
+                        <input type="password" name="confirm_password" class="form-control" 
+                               required minlength="6"
+                               placeholder="Confirm password">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label><?= t('address') ?></label>
+                        <textarea name="address" class="form-control" 
+                                  required minlength="5" rows="3" 
+                                  placeholder="Your full address"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
+                    </div>
+                </div>
                 
-                <form method="POST">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label><?= t('national_id') ?></label>
-                            <input type="text" name="national_id" class="form-control" 
-                                   required maxlength="14" pattern="\d{14}"
-                                   placeholder="14-digit National ID"
-                                   value="<?= htmlspecialchars($_POST['national_id'] ?? '') ?>">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label><?= t('full_name') ?></label>
-                            <input type="text" name="name" class="form-control" 
-                                   required minlength="3"
-                                   placeholder="Your full name"
-                                   value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label><?= t('email') ?></label>
-                            <input type="email" name="email" class="form-control" 
-                                   required
-                                   placeholder="your@email.com"
-                                   value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label><?= t('phone_number') ?></label>
-                            <input type="tel" name="phone" class="form-control" 
-                                   required pattern="\d{10,15}"
-                                   placeholder="Phone number"
-                                   value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label><?= t('password') ?></label>
-                            <input type="password" name="password" class="form-control" 
-                                   required minlength="6"
-                                   placeholder="Create password">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label><?= t('confirm_password') ?></label>
-                            <input type="password" name="confirm_password" class="form-control" 
-                                   required minlength="6"
-                                   placeholder="Confirm password">
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label><?= t('address') ?></label>
-                            <textarea name="address" class="form-control" 
-                                      required minlength="5" rows="3" 
-                                      placeholder="Your full address"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="8.5" cy="7" r="4"/>
-                            <line x1="20" y1="8" x2="20" y2="14"/>
-                            <line x1="23" y1="11" x2="17" y2="11"/>
-                        </svg>
-                        <?= t('create_account') ?>
-                    </button>
-                    
-                    <div class="form-footer">
-                        Already have an account? <a href="login.php">Sign In</a>
-                    </div>
-                </form>
-            </div>
+                <button type="submit" class="btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="8.5" cy="7" r="4"/>
+                        <line x1="20" y1="8" x2="20" y2="14"/>
+                        <line x1="23" y1="11" x2="17" y2="11"/>
+                    </svg>
+                    <?= t('create_account') ?>
+                </button>
+                
+                <div class="form-footer">
+                    Already have an account? <a href="login.php">Sign In</a>
+                </div>
+            </form>
         </div>
     </div>
 </body>
