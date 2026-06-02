@@ -389,41 +389,56 @@ $isRTL = $lang === 'ar';
             border-color: #0f1d3f;
         }
         
-        /* Severity dropdown fix */
-        .form-select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-color: white !important;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            padding-right: 40px;
-            cursor: pointer;
+        /* Severity dropdown fix - Complete rewrite */
+        select[name="severity"],
+        .form-group select {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-color: #ffffff !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 16px center !important;
+            background-size: 20px !important;
+            padding: 16px 45px 16px 20px !important;
+            border: 2px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            color: var(--text-primary) !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            width: 100%;
+            box-sizing: border-box;
         }
         
-        .form-select:hover {
+        select[name="severity"]:hover,
+        .form-group select:hover {
             border-color: var(--primary) !important;
-            background-color: white !important;
+            background-color: #ffffff !important;
         }
         
-        .form-select:focus {
-            outline: none;
+        select[name="severity"]:focus,
+        .form-group select:focus {
+            outline: none !important;
             border-color: var(--primary) !important;
             box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.1) !important;
-            background-color: white !important;
+            background-color: #ffffff !important;
         }
         
-        /* Fix dropdown options background */
-        .form-select option {
-            background-color: white !important;
-            color: var(--text-primary) !important;
-            padding: 12px 16px;
+        /* Fix dropdown options background - Works in most browsers */
+        select[name="severity"] option,
+        .form-group select option {
+            background-color: #ffffff !important;
+            color: #1a202c !important;
+            padding: 12px 16px !important;
+            font-weight: 500 !important;
         }
         
-        .form-select option:hover,
-        .form-select option:checked {
-            background-color: #f0f4ff !important;
+        select[name="severity"] option:checked,
+        .form-group select option:checked {
+            background-color: #e0e7ff !important;
+            color: #3730a3 !important;
         }
 
         /* Voice Button Styles */
@@ -631,7 +646,7 @@ $isRTL = $lang === 'ar';
             
             <div class="form-group">
                 <label class="form-label required"><?= t('severity') ?></label>
-                <select name="severity" class="form-select">
+                <select name="severity" style="appearance: none !important; background-color: white !important; background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%234a5568%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpolyline points=%276 9 12 15 18 9%27%3E%3C/polyline%3E%3C/svg%3E') !important; background-repeat: no-repeat !important; background-position: right 16px center !important; background-size: 20px !important;">
                     <option value="Low"><?= t('low') ?></option>
                     <option value="Medium" selected><?= t('medium') ?></option>
                     <option value="High"><?= t('high') ?></option>
