@@ -207,6 +207,8 @@ class AppLocalizations {
           : 'Tap to open Google Maps and pin the issue location';
   String get pleaseUploadPhoto =>
       isArabic ? 'يرجى تحميل صورة' : 'Please upload a photo';
+  String get camera => isArabic ? 'الكاميرا' : 'Camera';
+  String get gallery => isArabic ? 'المعرض' : 'Gallery';
   String get locationSelected =>
       isArabic ? 'تم تحديد الموقع' : 'Location selected';
   String get describeTheProblem =>
@@ -263,6 +265,34 @@ class AppLocalizations {
       isArabic
           ? 'الرجاء تسجيل الدخول لعرض الطلبات'
           : 'Please log in to view orders';
+
+  // Product Management (Admin)
+  String get productManagement =>
+      isArabic ? 'إدارة المنتجات' : 'Product Management';
+  String get deleteProduct => isArabic ? 'حذف المنتج' : 'Delete Product';
+  String get areYouSureDeleteProduct =>
+      isArabic
+          ? 'هل أنت متأكد أنك تريد حذف'
+          : 'Are you sure you want to delete';
+  String get thisActionCannotBeUndone =>
+      isArabic
+          ? 'لا يمكن التراجع عن هذا الإجراء.'
+          : 'This action cannot be undone.';
+  String get searchProducts =>
+      isArabic ? 'بحث عن المنتجات...' : 'Search products...';
+  String get allCategories => isArabic ? 'جميع الفئات' : 'All Categories';
+  String get addNewProduct => isArabic ? 'إضافة منتج جديد' : 'Add New Product';
+  String get noProductsFound =>
+      isArabic ? 'لم يتم العثور على منتجات' : 'No products found';
+  String get tryAdjustingFilters =>
+      isArabic
+          ? 'حاول تعديل البحث أو الفلاتر'
+          : 'Try adjusting your search or filters';
+  String get lowStock => isArabic ? 'مخزون منخفض' : 'Low Stock';
+  String get inStock => isArabic ? 'متوفر' : 'In Stock';
+  String get category => isArabic ? 'الفئة' : 'Category';
+  String get chooseImageSource =>
+      isArabic ? 'اختر مصدر الصورة' : 'Choose Image Source';
 
   // Location Picker
   String get pickLocation => isArabic ? 'اختر الموقع' : 'Pick Location';

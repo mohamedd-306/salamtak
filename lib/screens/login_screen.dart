@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import '../services/database_service.dart';
@@ -48,8 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
         await prefs.setString('name', user.name);
 
         // Initialize cart for user (not admin)
-        if (user.userType != 'moderator' && 
-            user.userType != 'product_manager' && 
+        if (user.userType != 'moderator' &&
+            user.userType != 'product_manager' &&
             mounted) {
           final cartProvider = Provider.of<CartProvider>(
             context,
@@ -279,6 +280,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextFormField(
                             controller: _nationalIdController,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(
+                                _loginType == 'admin' ? 9 : 14,
+                              ),
+                            ],
                             style: const TextStyle(fontSize: 16),
                             decoration: InputDecoration(
                               labelText:

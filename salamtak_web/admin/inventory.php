@@ -622,9 +622,14 @@ foreach ($reviews_by_product as $productId => $reviews) {
                                     </div>
                                 </td>
                                 <td>
-                                    <button onclick="if(confirm('<?= t('delete') ?>?')) window.location.href='?delete=<?= htmlspecialchars($product['id']) ?>'" class="delete-btn">
-                                        <?= t('delete') ?>
-                                    </button>
+                                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                                        <a href="edit_product.php?id=<?= htmlspecialchars($product['id']) ?>" class="stock-btn" style="text-decoration: none; text-align: center;">
+                                            <?= t('edit') ?>
+                                        </a>
+                                        <button onclick="if(confirm('<?= t('delete') ?>?')) window.location.href='?delete=<?= htmlspecialchars($product['id']) ?>'" class="delete-btn">
+                                            <?= t('delete') ?>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

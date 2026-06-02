@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/database_service.dart';
 import '../models/user.dart' as app_user;
 import '../theme.dart';
@@ -198,6 +199,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           TextFormField(
                             controller: _nationalIdController,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(14),
+                            ],
                             style: const TextStyle(fontSize: 16),
                             decoration: InputDecoration(
                               labelText: l10n.nationalId,

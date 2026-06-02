@@ -7,16 +7,11 @@ class ProductCategories {
   // Private constructor to prevent instantiation
   ProductCategories._();
 
-  /// List of all available product categories
+  /// List of all available product categories (matches website categories)
   static const List<String> all = [
-    'Safety Equipment',
-    'Filters',
-    'Pumps',
-    'Pipes',
-    'Valves',
-    'Tools',
-    'Accessories',
-    'Chemicals',
+    'Safety Wear',
+    'Head Protection',
+    'Footwear',
     'Other',
   ];
 

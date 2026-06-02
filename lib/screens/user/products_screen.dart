@@ -6,12 +6,20 @@ import '../../providers/cart_provider.dart';
 import '../../theme.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/product_image_widget.dart';
+import '../../constants/product_categories.dart';
 import 'cart_screen.dart';
 import 'user_home_screen.dart';
 import 'product_details_screen.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
+
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  String _selectedCategory = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -87,75 +95,207 @@ class ProductsScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('products').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        children: [
+          // Category Filter Buttons
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
                 children: [
-                  Icon(
-                    Icons.shopping_bag_outlined,
-                    size: 64,
-                    color: Colors.grey,
+                  _CategoryFilterButton(
+                    label: l10n.allCategories,
+                    isSelected: _selectedCategory == 'All',
+                    onTap: () {
+                      setState(() {
+                        _selectedCategory = 'All';
+                      });
+                    },
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    'No products available',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
+                  const SizedBox(width: 8),
+                  ...ProductCategories.all.map((category) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: _CategoryFilterButton(
+                        label: category,
+                        isSelected: _selectedCategory == category,
+                        onTap: () {
+                          setState(() {
+                            _selectedCategory = category;
+                          });
+                        },
+                      ),
+                    );
+                  }),
                 ],
               ),
-            );
-          }
+            ),
+          ),
 
-          final products =
-              snapshot.data!.docs
-                  .map(
-                    (doc) => Product.fromMap(
-                      doc.data() as Map<String, dynamic>,
-                      doc.id,
+          // Products Grid
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream:
+                  FirebaseFirestore.instance.collection('products').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.shopping_bag_outlined,
+                          size: 64,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          'No products available',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      ],
                     ),
-                  )
-                  .toList();
+                  );
+                }
 
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              // Calculate responsive aspect ratio based on screen width
-              final screenWidth = constraints.maxWidth;
-              final cardWidth = (screenWidth - 48) / 2; // 2 columns with padding
-              final aspectRatio = cardWidth / (cardWidth * 1.5); // Adjust height
-              
-              return GridView.builder(
-                padding: const EdgeInsets.all(16),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: aspectRatio,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                ),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return ProductCard(product: products[index]);
-                },
-              );
-            },
-          );
-        },
+                // Parse products from Firestore
+                List<Product> products =
+                    snapshot.data!.docs
+                        .map(
+                          (doc) => Product.fromMap(
+                            doc.data() as Map<String, dynamic>,
+                            doc.id,
+                          ),
+                        )
+                        .toList();
+
+                // Filter products by selected category
+                if (_selectedCategory != 'All') {
+                  products =
+                      products
+                          .where(
+                            (product) => product.category == _selectedCategory,
+                          )
+                          .toList();
+                }
+
+                // Show no results message if filtered list is empty
+                if (products.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off,
+                          size: 64,
+                          color: Colors.grey[400],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No products in this category',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    // Calculate responsive aspect ratio based on screen width
+                    final screenWidth = constraints.maxWidth;
+                    final cardWidth =
+                        (screenWidth - 48) / 2; // 2 columns with padding
+                    final aspectRatio =
+                        cardWidth / (cardWidth * 1.5); // Adjust height
+
+                    return GridView.builder(
+                      padding: const EdgeInsets.all(16),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: aspectRatio,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        return ProductCard(product: products[index]);
+                      },
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
+/// Category Filter Button Widget
+class _CategoryFilterButton extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _CategoryFilterButton({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? AppTheme.primary : Colors.white,
+          border: Border.all(
+            color: isSelected ? AppTheme.primary : Colors.grey[300]!,
+            width: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : AppTheme.textSecondary,
+            fontSize: 14,
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Product Card Widget
 class ProductCard extends StatelessWidget {
   final Product product;
 
@@ -175,7 +315,9 @@ class ProductCard extends StatelessWidget {
 
         return Card(
           elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           shadowColor: Colors.black.withValues(alpha: 0.1),
           child: InkWell(
             onTap: () {
@@ -269,7 +411,8 @@ class ProductCard extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                               builder:
-                                                  (context) => const CartScreen(),
+                                                  (context) =>
+                                                      const CartScreen(),
                                             ),
                                           );
                                         },
@@ -303,12 +446,17 @@ class ProductCard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.add_shopping_cart, size: isSmallCard ? 14 : 16),
+                                Icon(
+                                  Icons.add_shopping_cart,
+                                  size: isSmallCard ? 14 : 16,
+                                ),
                                 SizedBox(width: isSmallCard ? 2 : 4),
                                 Flexible(
                                   child: Text(
                                     l10n.add,
-                                    style: TextStyle(fontSize: isSmallCard ? 10 : 12),
+                                    style: TextStyle(
+                                      fontSize: isSmallCard ? 10 : 12,
+                                    ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),

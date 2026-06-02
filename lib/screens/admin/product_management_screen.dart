@@ -4,6 +4,7 @@ import '../../services/product_service.dart';
 import '../../theme.dart';
 import '../../widgets/product_card.dart';
 import '../../constants/product_categories.dart';
+import '../../l10n/app_localizations.dart';
 import 'product_form_screen.dart';
 
 /// Admin screen for managing products
@@ -77,18 +78,19 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
 
   /// Show delete confirmation dialog
   Future<void> _showDeleteConfirmation(Product product) async {
+    final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Delete Product'),
+            title: Text(l10n.deleteProduct),
             content: Text(
-              'Are you sure you want to delete "${product.name}"?\n\nThis action cannot be undone.',
+              '${l10n.areYouSureDeleteProduct} "${product.name}"?\n\n${l10n.thisActionCannotBeUndone}',
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
+                child: Text(l10n.cancel),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.pop(context, true),
@@ -96,7 +98,7 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                   backgroundColor: AppTheme.danger,
                   foregroundColor: Colors.white,
                 ),
-                child: const Text('Delete'),
+                child: Text(l10n.delete),
               ),
             ],
           ),
@@ -154,9 +156,10 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Manage Products'),
+        title: Text(l10n.productManagement),
         backgroundColor: AppTheme.primary,
         foregroundColor: Colors.white,
       ),
@@ -172,7 +175,7 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                 TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search products...',
+                    hintText: l10n.searchProducts,
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon:
                         _searchQuery.isNotEmpty
@@ -204,9 +207,9 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                 // Category Filter
                 Row(
                   children: [
-                    const Text(
-                      'Category:',
-                      style: TextStyle(
+                    Text(
+                      '${l10n.category}:',
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
@@ -228,9 +231,9 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                           ),
                         ),
                         items: [
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: 'All',
-                            child: Text('All Categories'),
+                            child: Text(l10n.allCategories),
                           ),
                           ...ProductCategories.all.map((category) {
                             return DropdownMenuItem(
@@ -344,7 +347,7 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'No products found',
+                          l10n.noProductsFound,
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.grey[600],
@@ -352,7 +355,7 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Try adjusting your search or filter',
+                          l10n.tryAdjustingFilters,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[500],
@@ -388,7 +391,7 @@ class _ProductManagementScreenState extends State<ProductManagementScreen> {
         backgroundColor: AppTheme.primary,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
-        label: const Text('Add Product'),
+        label: Text(l10n.addNewProduct),
       ),
     );
   }

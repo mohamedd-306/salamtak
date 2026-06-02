@@ -21,15 +21,16 @@ void main() async {
   debugRepaintRainbowEnabled = false;
   debugRepaintTextRainbowEnabled = false;
 
+  // TEMPORARILY DISABLED - to see errors
   // Hide overflow errors - don't show OR log them
-  FlutterError.onError = (FlutterErrorDetails details) {
-    // Completely silent - no console output, no red screen
-  };
+  // FlutterError.onError = (FlutterErrorDetails details) {
+  //   // Completely silent - no console output, no red screen
+  // };
 
-  // Hide error widgets - return completely invisible widget
-  ErrorWidget.builder = (FlutterErrorDetails details) {
-    return const SizedBox.shrink();
-  };
+  // // Hide error widgets - return completely invisible widget
+  // ErrorWidget.builder = (FlutterErrorDetails details) {
+  //   return const SizedBox.shrink();
+  // };
 
   await Firebase.initializeApp(
     options: const FirebaseOptions(

@@ -5,6 +5,7 @@ import '../../models/product.dart';
 import '../../services/product_service.dart';
 import '../../theme.dart';
 import '../../constants/product_categories.dart';
+import '../../l10n/app_localizations.dart';
 
 /// Screen for creating new products or editing existing ones
 ///
@@ -40,22 +41,37 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   void initState() {
     super.initState();
 
-    // Initialize controllers
-    _nameController = TextEditingController(text: widget.product?.name ?? '');
-    _descriptionController = TextEditingController(
-      text: widget.product?.description ?? '',
-    );
-    _priceController = TextEditingController(
-      text: widget.product?.price.toStringAsFixed(2) ?? '',
-    );
-    _stockController = TextEditingController(
-      text: widget.product?.stock.toString() ?? '',
-    );
+    try {
+      // Initialize controllers
+      _nameController = TextEditingController(text: widget.product?.name ?? '');
+      _descriptionController = TextEditingController(
+        text: widget.product?.description ?? '',
+      );
+      _priceController = TextEditingController(
+        text: widget.product?.price.toStringAsFixed(2) ?? '',
+      );
+      _stockController = TextEditingController(
+        text: widget.product?.stock.toString() ?? '',
+      );
 
-    // Set existing values for edit mode
-    if (widget.product != null) {
-      _selectedCategory = widget.product!.category;
-      _existingImageUrl = widget.product!.image;
+      // Set existing values for edit mode
+      if (widget.product != null) {
+        // Validate category exists in current list, otherwise use default
+        if (ProductCategories.isValid(widget.product!.category)) {
+          _selectedCategory = widget.product!.category;
+        } else {
+          _selectedCategory = ProductCategories.defaultCategory;
+        }
+        _existingImageUrl = widget.product!.image;
+      }
+    } catch (e) {
+      // Log error and set defaults
+      debugPrint('Error initializing ProductFormScreen: $e');
+      _nameController = TextEditingController();
+      _descriptionController = TextEditingController();
+      _priceController = TextEditingController();
+      _stockController = TextEditingController();
+      _selectedCategory = ProductCategories.defaultCategory;
     }
   }
 
@@ -70,11 +86,87 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
   // ==================== Image Handling ====================
 
-  /// Pick image from gallery
+  /// Show image source selection bottom sheet
   Future<void> _pickImage() async {
+    final l10n = AppLocalizations.of(context);
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+          ),
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                l10n.chooseImageSource,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: _ImageSourceOption(
+                      icon: Icons.camera_alt,
+                      label: l10n.camera,
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF4A90E2), Color(0xFF357ABD)],
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _pickImageFromSource(ImageSource.camera);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _ImageSourceOption(
+                      icon: Icons.photo_library,
+                      label: l10n.gallery,
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF66BB6A), Color(0xFF4CAF50)],
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _pickImageFromSource(ImageSource.gallery);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  /// Pick image from specified source
+  Future<void> _pickImageFromSource(ImageSource source) async {
     try {
       final XFile? image = await _imagePicker.pickImage(
-        source: ImageSource.gallery,
+        source: source,
         maxWidth: 1920,
         imageQuality: 85,
       );
@@ -529,6 +621,57 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
             style: TextStyle(color: Colors.grey, fontSize: 16),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Image Source Option Widget
+class _ImageSourceOption extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Gradient gradient;
+  final VoidCallback onTap;
+
+  const _ImageSourceOption({
+    required this.icon,
+    required this.label,
+    required this.gradient,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        decoration: BoxDecoration(
+          gradient: gradient,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 48, color: Colors.white),
+            const SizedBox(height: 12),
+            Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
