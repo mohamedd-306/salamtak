@@ -115,8 +115,8 @@ $isRTL = $lang === 'ar';
         }
         
         :root {
-            --primary: #0f1d3f;
-            --primary-light: #1e3a8a;
+            --primary: #667EEA;
+            --primary-light: #764BA2;
             --secondary: #FBBF24;
             --text-primary: #1a202c;
             --text-secondary: #4a5568;
@@ -126,7 +126,7 @@ $isRTL = $lang === 'ar';
         html, body {
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #0f1d3f 0%, #1e3a8a 100%);
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
         }
         
         .page-wrapper {
@@ -173,7 +173,7 @@ $isRTL = $lang === 'ar';
         }
         
         .card-header {
-            background: linear-gradient(135deg, #0f1d3f 0%, #1e3a8a 100%);
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
             padding: 40px 40px 30px;
             text-align: center;
             color: white;
@@ -243,8 +243,8 @@ $isRTL = $lang === 'ar';
         
         .form-control:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(15, 29, 63, 0.1);
+            border-color: #667EEA;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
         }
         
         .form-control::placeholder {
@@ -274,13 +274,13 @@ $isRTL = $lang === 'ar';
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
             color: white;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px -10px rgba(15, 29, 63, 0.5);
+            box-shadow: 0 12px 24px -10px rgba(102, 126, 234, 0.5);
         }
         
         .btn-primary:active {
@@ -297,7 +297,7 @@ $isRTL = $lang === 'ar';
         }
         
         .form-footer a {
-            color: var(--primary);
+            color: #667EEA;
             text-decoration: none;
             font-weight: 700;
             transition: all 0.3s;
