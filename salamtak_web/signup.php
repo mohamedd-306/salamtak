@@ -164,8 +164,8 @@ $isRTL = $lang === 'ar';
         }
         .signup-card {
             width: 100%;
-            max-width: 1200px;
-            padding: 50px 70px !important;
+            max-width: 680px;
+            padding: 48px !important;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 24px;
@@ -176,7 +176,7 @@ $isRTL = $lang === 'ar';
         .signup-form {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 16px 20px;
             grid-auto-flow: dense;
         }
         
@@ -188,37 +188,43 @@ $isRTL = $lang === 'ar';
             .signup-form {
                 grid-template-columns: 1fr;
             }
+            .signup-card {
+                padding: 32px !important;
+            }
         }
         .signup-card h1 {
-            font-size: 42px;
+            font-size: 32px;
             font-weight: 900;
             color: var(--text-primary);
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             text-align: center;
         }
         .signup-card .subtitle {
-            font-size: 18px;
+            font-size: 15px;
             color: var(--text-secondary);
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
         .signup-form .form-group {
-            margin-bottom: 24px !important;
+            margin-bottom: 0 !important;
         }
         .signup-form .form-group label {
-            font-size: 15px !important;
-            margin-bottom: 10px !important;
-            font-weight: 600;
             display: block;
+            font-size: 14px !important;
+            margin-bottom: 8px !important;
+            font-weight: 600;
+            color: var(--text-primary);
         }
         .signup-form input,
         .signup-form textarea {
-            padding: 16px 20px !important;
-            font-size: 16px !important;
-            border-radius: 12px !important;
+            width: 100%;
+            padding: 14px 16px !important;
+            font-size: 15px !important;
+            border-radius: 10px !important;
             border: 2px solid #e2e8f0 !important;
             background: white !important;
-            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
         .signup-form input:focus,
         .signup-form textarea:focus {
@@ -227,12 +233,12 @@ $isRTL = $lang === 'ar';
             box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.1) !important;
         }
         .signup-form button {
-            padding: 18px 32px !important;
-            font-size: 17px !important;
-            margin-top: 12px !important;
-            border-radius: 12px !important;
-            font-weight: 700;
             width: 100%;
+            padding: 14px 24px !important;
+            font-size: 16px !important;
+            margin-top: 8px !important;
+            border-radius: 10px !important;
+            font-weight: 700;
         }
         .form-footer {
             text-align: center;
@@ -275,9 +281,9 @@ $isRTL = $lang === 'ar';
     <div class="signup-container">
         <div class="signup-card">
             <!-- Title and Tagline -->
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h1 style="font-size: 42px; font-weight: 900; color: var(--text-primary); margin-bottom: 14px;"><?= t('create_account') ?></h1>
-                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 0;">Join thousands making roads safer</p>
+            <div style="text-align: center; margin-bottom: 32px;">
+                <h1 style="font-size: 32px; font-weight: 900; color: var(--text-primary); margin-bottom: 10px;"><?= t('create_account') ?></h1>
+                <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 0;">Join thousands making roads safer</p>
             </div>
             
             <?php if ($error): ?>

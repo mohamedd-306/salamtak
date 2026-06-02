@@ -195,8 +195,8 @@ $isRTL = $lang === 'ar';
         }
         .login-card {
             width: 100%;
-            max-width: 1100px;
-            padding: 50px 70px !important;
+            max-width: 480px;
+            padding: 48px !important;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 24px;
@@ -204,31 +204,36 @@ $isRTL = $lang === 'ar';
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .login-card h2 {
-            font-size: 36px !important;
-            margin-bottom: 16px !important;
+            font-size: 28px !important;
+            margin-bottom: 12px !important;
             color: var(--text-primary);
             font-weight: 800;
         }
         .login-card .subtitle {
-            font-size: 18px !important;
-            margin-bottom: 32px !important;
+            font-size: 15px !important;
+            margin-bottom: 28px !important;
             color: var(--text-secondary);
         }
         .login-form .form-group {
-            margin-bottom: 24px !important;
+            margin-bottom: 20px !important;
         }
         .login-form .form-group label {
-            font-size: 15px !important;
-            margin-bottom: 10px !important;
+            display: block;
+            font-size: 14px !important;
+            margin-bottom: 8px !important;
             font-weight: 600;
+            color: var(--text-primary);
         }
         .login-form input,
         .login-form select {
-            padding: 16px 20px !important;
-            font-size: 16px !important;
-            border-radius: 12px !important;
+            width: 100%;
+            padding: 14px 16px !important;
+            font-size: 15px !important;
+            border-radius: 10px !important;
             border: 2px solid #e2e8f0 !important;
             background: white !important;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
         .login-form input:focus,
         .login-form select:focus {
@@ -237,10 +242,11 @@ $isRTL = $lang === 'ar';
             box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.1) !important;
         }
         .login-form button {
-            padding: 18px 32px !important;
-            font-size: 17px !important;
-            margin-top: 12px !important;
-            border-radius: 12px !important;
+            width: 100%;
+            padding: 14px 24px !important;
+            font-size: 16px !important;
+            margin-top: 8px !important;
+            border-radius: 10px !important;
             font-weight: 700;
         }
         .form-footer {
@@ -288,12 +294,12 @@ $isRTL = $lang === 'ar';
     <div class="login-container">
         <div class="login-card">
             <!-- Title and Tagline -->
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h1 style="font-size: 42px; font-weight: 900; color: var(--text-primary); margin-bottom: 14px;"><?= t('app_name') ?></h1>
-                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 0;"><?= t('tagline') ?></p>
+            <div style="text-align: center; margin-bottom: 36px;">
+                <h1 style="font-size: 32px; font-weight: 900; color: var(--text-primary); margin-bottom: 10px;"><?= t('app_name') ?></h1>
+                <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 0;"><?= t('tagline') ?></p>
             </div>
             
-            <h2><?= t('welcome_back') ?></h2>
+            <h2 style="text-align: center;"><?= t('welcome_back') ?></h2>
             
             <?php if ($error): ?>
                 <div class="alert alert-error">

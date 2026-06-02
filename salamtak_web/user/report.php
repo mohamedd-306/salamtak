@@ -394,21 +394,36 @@ $isRTL = $lang === 'ar';
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
+            background-color: white !important;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 36px;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
         }
         
         .form-select:hover {
             border-color: var(--primary) !important;
-            background-color: var(--card-bg) !important;
+            background-color: white !important;
         }
         
         .form-select:focus {
             outline: none;
             border-color: var(--primary) !important;
             box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.1) !important;
+            background-color: white !important;
+        }
+        
+        /* Fix dropdown options background */
+        .form-select option {
+            background-color: white !important;
+            color: var(--text-primary) !important;
+            padding: 12px 16px;
+        }
+        
+        .form-select option:hover,
+        .form-select option:checked {
+            background-color: #f0f4ff !important;
         }
 
         /* Voice Button Styles */
