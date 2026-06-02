@@ -120,11 +120,10 @@ $isRTL = $lang === 'ar';
         }
         
         body {
-            background: linear-gradient(135deg, #2d3e5f 0%, #3d5278 50%, #2d3e5f 100%);
+            background: linear-gradient(135deg, #0f1d3f 0%, #1a2d5a 50%, #0f1d3f 100%);
             background-size: 200% 200%;
             animation: gradientShift 15s ease infinite;
             position: relative;
-            overflow-x: hidden;
         }
         
         body::before {
@@ -197,7 +196,7 @@ $isRTL = $lang === 'ar';
         .card-title h1 {
             font-size: 32px;
             font-weight: 900;
-            color: #2d3e5f;
+            color: #0f1d3f;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
@@ -253,14 +252,14 @@ $isRTL = $lang === 'ar';
             transition: all 0.3s;
             font-family: inherit;
             background: rgba(255, 255, 255, 0.4);
-            color: #2d3e5f;
+            color: #0f1d3f;
             font-weight: 500;
         }
         
         .form-control:focus {
             outline: none;
             background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 0 3px rgba(45, 62, 95, 0.15);
+            box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.15);
         }
         
         .form-control::placeholder {
@@ -287,14 +286,14 @@ $isRTL = $lang === 'ar';
             justify-content: center;
             gap: 10px;
             margin-top: 24px;
-            background: #2d3e5f;
+            background: #0f1d3f;
             color: white;
         }
         
         .btn:hover {
-            background: #3d4e6f;
+            background: #1a2d5a;
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px -8px rgba(45, 62, 95, 0.4);
+            box-shadow: 0 12px 24px -8px rgba(15, 29, 63, 0.4);
         }
         
         .btn:active {
@@ -309,7 +308,7 @@ $isRTL = $lang === 'ar';
         }
         
         .form-footer a {
-            color: #2d3e5f;
+            color: #0f1d3f;
             text-decoration: none;
             font-weight: 700;
             transition: all 0.3s;
