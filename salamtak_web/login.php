@@ -188,7 +188,7 @@ $isRTL = $lang === 'ar';
         .login-card {
             width: 100%;
             max-width: 480px;
-            background: linear-gradient(145deg, #e8e5da 0%, #d9d6cb 100%);
+            background: #f5f5f5;
             border-radius: 32px;
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
             padding: 50px 45px;
@@ -283,6 +283,7 @@ $isRTL = $lang === 'ar';
             background: rgba(255, 255, 255, 0.4);
             color: #0f1d3f;
             font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
         .form-control:focus {
@@ -407,7 +408,9 @@ $isRTL = $lang === 'ar';
                     <input type="text" name="identifier" id="identifierInput" class="form-control" 
                            required maxlength="14" pattern="\d{14}" 
                            placeholder="<?= t('enter_national_id') ?>" 
-                           value="<?= htmlspecialchars($_POST['identifier'] ?? '') ?>">
+                           value="<?= htmlspecialchars($_POST['identifier'] ?? '') ?>"
+                           inputmode="numeric"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
                 
                 <div class="form-group">

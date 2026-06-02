@@ -362,6 +362,7 @@ return [
         'delivered' => 'Delivered',
         'cancelled' => 'Cancelled',
         'processing' => 'Processing',
+        'completed' => 'Completed',
         
         // User Products Page
         'products_page_title' => 'Products',
@@ -804,6 +805,7 @@ return [
         'delivered' => 'تم التوصيل',
         'cancelled' => 'ملغي',
         'processing' => 'قيد المعالجة',
+        'completed' => 'مكتمل',
         
         // User Products Page
         'products_page_title' => 'المنتجات',

@@ -52,8 +52,7 @@ function getStatusColor($status) {
     switch ($status) {
         case 'pending': return '#f59e0b';
         case 'processing': return '#3b82f6';
-        case 'shipped': return '#8b5cf6';
-        case 'delivered': return '#10b981';
+        case 'completed': return '#10b981';
         case 'cancelled': return '#ef4444';
         default: return '#6b7280';
     }
@@ -63,8 +62,7 @@ function getStatusBg($status) {
     switch ($status) {
         case 'pending': return '#fef3c7';
         case 'processing': return '#dbeafe';
-        case 'shipped': return '#ede9fe';
-        case 'delivered': return '#d1fae5';
+        case 'completed': return '#d1fae5';
         case 'cancelled': return '#fee2e2';
         default: return '#f3f4f6';
     }
@@ -575,8 +573,7 @@ function getStatusBg($status) {
                                 <select name="status" class="status-select">
                                     <option value="pending" <?= ($order['status'] ?? '') === 'pending' ? 'selected' : '' ?>><?= t('pending') ?></option>
                                     <option value="processing" <?= ($order['status'] ?? '') === 'processing' ? 'selected' : '' ?>><?= t('processing') ?></option>
-                                    <option value="shipped" <?= ($order['status'] ?? '') === 'shipped' ? 'selected' : '' ?>><?= t('shipped') ?></option>
-                                    <option value="delivered" <?= ($order['status'] ?? '') === 'delivered' ? 'selected' : '' ?>><?= t('delivered') ?></option>
+                                    <option value="completed" <?= ($order['status'] ?? '') === 'completed' ? 'selected' : '' ?>><?= t('completed') ?></option>
                                     <option value="cancelled" <?= ($order['status'] ?? '') === 'cancelled' ? 'selected' : '' ?>><?= t('cancelled') ?></option>
                                 </select>
                                 <button type="submit" name="update_order_status" class="update-btn"><?= t('update') ?></button>

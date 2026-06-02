@@ -29,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = t('required');
     } elseif (strlen($national_id) !== 14 || !ctype_digit($national_id)) {
         $error = t('must_be_14_digits');
+    } elseif (strlen($phone) !== 11 || !ctype_digit($phone)) {
+        $error = "Phone number must be exactly 11 digits";
     } elseif ($password !== $confirm_password) {
         $error = t('passwords_do_not_match');
     } else {
@@ -181,7 +183,7 @@ $isRTL = $lang === 'ar';
         .signup-card {
             width: 100%;
             max-width: 700px;
-            background: linear-gradient(145deg, #e8e5da 0%, #d9d6cb 100%);
+            background: #f5f5f5;
             border-radius: 32px;
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
             padding: 45px 40px;
@@ -254,6 +256,7 @@ $isRTL = $lang === 'ar';
             background: rgba(255, 255, 255, 0.4);
             color: #0f1d3f;
             font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
         .form-control:focus {
@@ -375,7 +378,9 @@ $isRTL = $lang === 'ar';
                         <input type="text" name="national_id" class="form-control" 
                                required maxlength="14" pattern="\d{14}"
                                placeholder="14-digit National ID"
-                               value="<?= htmlspecialchars($_POST['national_id'] ?? '') ?>">
+                               value="<?= htmlspecialchars($_POST['national_id'] ?? '') ?>"
+                               inputmode="numeric"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     
                     <div class="form-group">
@@ -397,9 +402,11 @@ $isRTL = $lang === 'ar';
                     <div class="form-group">
                         <label><?= t('phone_number') ?></label>
                         <input type="tel" name="phone" class="form-control" 
-                               required pattern="\d{10,15}"
-                               placeholder="Phone number"
-                               value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
+                               required pattern="\d{11}" maxlength="11"
+                               placeholder="11-digit phone number"
+                               value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
+                               inputmode="numeric"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     
                     <div class="form-group">
