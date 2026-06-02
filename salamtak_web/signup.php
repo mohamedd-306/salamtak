@@ -164,13 +164,30 @@ $isRTL = $lang === 'ar';
         }
         .signup-card {
             width: 100%;
-            max-width: 900px;
-            padding: 48px 60px !important;
+            max-width: 1200px;
+            padding: 50px 70px !important;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .signup-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            grid-auto-flow: dense;
+        }
+        
+        .signup-form .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        @media (max-width: 768px) {
+            .signup-form {
+                grid-template-columns: 1fr;
+            }
         }
         .signup-card h1 {
             font-size: 42px;
@@ -192,6 +209,7 @@ $isRTL = $lang === 'ar';
             font-size: 15px !important;
             margin-bottom: 10px !important;
             font-weight: 600;
+            display: block;
         }
         .signup-form input,
         .signup-form textarea {
@@ -200,6 +218,7 @@ $isRTL = $lang === 'ar';
             border-radius: 12px !important;
             border: 2px solid #e2e8f0 !important;
             background: white !important;
+            width: 100%;
         }
         .signup-form input:focus,
         .signup-form textarea:focus {
@@ -213,6 +232,7 @@ $isRTL = $lang === 'ar';
             margin-top: 12px !important;
             border-radius: 12px !important;
             font-weight: 700;
+            width: 100%;
         }
         .form-footer {
             text-align: center;
@@ -261,7 +281,7 @@ $isRTL = $lang === 'ar';
             </div>
             
             <?php if ($error): ?>
-                <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>
+                <div class="alert alert-error" style="grid-column: 1 / -1;"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
             
             <form method="POST" class="signup-form">
@@ -294,12 +314,6 @@ $isRTL = $lang === 'ar';
                 </div>
                 
                 <div class="form-group">
-                    <label><?= t('address') ?></label>
-                    <textarea name="address" required minlength="5" rows="3" 
-                              placeholder="Enter your full address"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
-                </div>
-                
-                <div class="form-group">
                     <label><?= t('password') ?></label>
                     <input type="password" name="password" required minlength="6"
                            placeholder="Create a strong password">
@@ -311,7 +325,13 @@ $isRTL = $lang === 'ar';
                            placeholder="Re-enter your password">
                 </div>
                 
-                <button type="submit" class="btn btn-primary btn-block">
+                <div class="form-group full-width">
+                    <label><?= t('address') ?></label>
+                    <textarea name="address" required minlength="5" rows="3" 
+                              placeholder="Enter your full address"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block full-width" style="margin-top: 16px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                         <circle cx="8.5" cy="7" r="4"/>

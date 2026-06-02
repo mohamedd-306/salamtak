@@ -195,8 +195,8 @@ $isRTL = $lang === 'ar';
         }
         .login-card {
             width: 100%;
-            max-width: 900px;
-            padding: 48px 60px !important;
+            max-width: 1100px;
+            padding: 50px 70px !important;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 24px;
