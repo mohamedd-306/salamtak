@@ -114,34 +114,43 @@ $isRTL = $lang === 'ar';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= t('app_name') ?> - <?= t('sign_in') ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        html, body {
-            height: 100%;
+        * {
             margin: 0;
             padding: 0;
-            background: #0f1d3f !important;
-            background-color: #0f1d3f !important;
+            box-sizing: border-box;
         }
-        body.login-page {
-            display: flex;
-            flex-direction: column;
+        
+        :root {
+            --primary: #0f1d3f;
+            --primary-light: #1e3a8a;
+            --secondary: #FBBF24;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --border: #e2e8f0;
+        }
+        
+        html, body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f1d3f 0%, #1e3a8a 100%);
+        }
+        
+        .page-wrapper {
             min-height: 100vh;
-            background: #0f1d3f !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
         }
-        body.login-page::before,
-        body.login-page::after {
-            display: none !important;
-        }
-        .login-container {
-            background: transparent !important;
-        }
+        
         .back-arrow {
             position: fixed;
             top: 24px;
             left: 24px;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -149,255 +158,314 @@ $isRTL = $lang === 'ar';
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             cursor: pointer;
             transition: all 0.3s;
-            z-index: 1000;
             text-decoration: none;
             color: white;
-        }
-        .back-arrow:hover {
-            transform: translateX(-4px);
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-        }
-        .login-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px 60px;
-        }
-        .login-header {
-            width: 100%;
-            max-width: 380px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-        .login-header .logo-container {
-            margin-bottom: 16px !important;
-        }
-        .login-header .logo-icon {
-            width: 80px !important;
-            height: 80px !important;
-            margin: 0 auto;
-        }
-        .login-header .app-title {
-            font-size: 32px !important;
-            margin-bottom: 8px !important;
-            color: white;
-            font-weight: 800;
-        }
-        .login-header .app-tagline {
-            font-size: 14px !important;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        .login-card {
-            width: 100%;
-            max-width: 680px;
-            padding: 48px 60px !important;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 100;
         }
         
-        @media (max-width: 768px) {
-            .login-card {
-                padding: 32px !important;
-                max-width: 95%;
-            }
+        .back-arrow:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(-4px);
         }
-        .login-card h2 {
-            font-size: 28px !important;
-            margin-bottom: 12px !important;
-            color: var(--text-primary);
-            font-weight: 800;
+        
+        .login-card {
+            width: 100%;
+            max-width: 550px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
         }
-        .login-card .subtitle {
-            font-size: 15px !important;
-            margin-bottom: 28px !important;
-            color: var(--text-secondary);
+        
+        .card-header {
+            background: linear-gradient(135deg, #0f1d3f 0%, #1e3a8a 100%);
+            padding: 50px 40px 40px;
+            text-align: center;
+            color: white;
         }
-        .login-form .form-group {
-            margin-bottom: 20px !important;
+        
+        .card-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
-        .login-form .form-group label {
+        
+        .card-header p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .card-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+        
+        .card-body {
+            padding: 40px;
+        }
+        
+        .alert {
+            padding: 16px 20px;
+            background: #fee;
+            border: 1px solid #fcc;
+            border-radius: 12px;
+            color: #c00;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
             display: block;
-            font-size: 14px !important;
-            margin-bottom: 8px !important;
+            font-size: 15px;
             font-weight: 600;
             color: var(--text-primary);
+            margin-bottom: 8px;
         }
-        .login-form input,
-        .login-form select {
+        
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .radio-label input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+        
+        .form-control {
             width: 100%;
-            padding: 14px 16px !important;
-            font-size: 15px !important;
-            border-radius: 10px !important;
-            border: 2px solid #e2e8f0 !important;
-            background: white !important;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
+            padding: 16px 18px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: white;
         }
-        .login-form input:focus,
-        .login-form select:focus {
-            border-color: var(--primary) !important;
-            outline: none !important;
-            box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.1) !important;
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(15, 29, 63, 0.1);
         }
-        .login-form button {
+        
+        .form-control::placeholder {
+            color: #a0aec0;
+        }
+        
+        .btn {
             width: 100%;
-            padding: 14px 24px !important;
-            font-size: 16px !important;
-            margin-top: 8px !important;
-            border-radius: 10px !important;
+            padding: 16px 24px;
+            font-size: 17px;
             font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
         }
-        .form-footer {
-            margin-top: 20px !important;
-            padding-top: 20px !important;
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
         }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -10px rgba(15, 29, 63, 0.5);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
         .form-footer {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 2px solid var(--border);
             text-align: center;
-            margin-top: 32px !important;
-            padding-top: 28px !important;
-            border-top: 2px solid var(--border-light);
+            font-size: 15px;
+            color: var(--text-secondary);
         }
+        
         .form-footer a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 700;
-            display: inline-block;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-        .form-footer .signup-link {
-            padding: 2px 0;
-            border-bottom: 2px solid transparent;
-        }
-        .form-footer .signup-link:hover {
+        
+        .form-footer a:hover {
             text-decoration: underline;
-            color: var(--primary);
         }
-        .alert {
-            padding: 16px 20px !important;
-            font-size: 16px !important;
-            margin-bottom: 24px !important;
-            border-radius: 12px !important;
+        
+        @media (max-width: 768px) {
+            .login-card {
+                max-width: 100%;
+            }
+            
+            .card-header {
+                padding: 40px 30px 30px;
+            }
+            
+            .card-header h1 {
+                font-size: 28px;
+            }
+            
+            .card-body {
+                padding: 30px 24px;
+            }
+            
+            .back-arrow {
+                top: 16px;
+                left: 16px;
+                width: 44px;
+                height: 44px;
+            }
         }
     </style>
 </head>
-<body class="login-page">
-    <!-- Back Arrow -->
+<body>
     <a href="home.php" class="back-arrow">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="19" y1="12" x2="5" y2="12"/>
             <polyline points="12 19 5 12 12 5"/>
         </svg>
     </a>
     
-    <div class="login-container">
+    <div class="page-wrapper">
         <div class="login-card">
-            <!-- Title and Tagline -->
-            <div style="text-align: center; margin-bottom: 36px;">
-                <h1 style="font-size: 32px; font-weight: 900; color: var(--text-primary); margin-bottom: 10px;"><?= t('app_name') ?></h1>
-                <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 0;"><?= t('tagline') ?></p>
+            <div class="card-header">
+                <h1><?= t('app_name') ?></h1>
+                <p><?= t('tagline') ?></p>
+                <h2><?= t('welcome_back') ?></h2>
             </div>
             
-            <h2 style="text-align: center;"><?= t('welcome_back') ?></h2>
-            
-            <?php if ($error): ?>
-                <div class="alert alert-error">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="8" x2="12" y2="12"/>
-                        <line x1="12" y1="16" x2="12.01" y2="16"/>
-                    </svg>
-                    <?= htmlspecialchars($error) ?>
-                </div>
-            <?php endif; ?>
-            
-            <form method="POST" class="login-form">
-                <div class="form-group">
-                    <label><?= t('login_as') ?></label>
-                    <div style="display: flex; gap: 24px; margin-bottom: 16px;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500;">
-                            <input type="radio" name="user_type" value="user" checked onchange="updateLoginForm()" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary);">
-                            <span><?= t('user') ?></span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500;">
-                            <input type="radio" name="user_type" value="admin" onchange="updateLoginForm()" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary);">
-                            <span><?= t('admin') ?></span>
-                        </label>
+            <div class="card-body">
+                <?php if ($error): ?>
+                    <div class="alert">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <?= htmlspecialchars($error) ?>
                     </div>
-                </div>
+                <?php endif; ?>
                 
-                <div class="form-group">
-                    <label id="idLabel"><?= t('national_id') ?></label>
-                    <input type="text" name="identifier" id="identifierInput" required maxlength="14" pattern="\d{14}" 
-                           placeholder="<?= t('enter_national_id') ?>" value="<?= htmlspecialchars($_POST['identifier'] ?? '') ?>">
-                </div>
-                
-                <div class="form-group">
-                    <label><?= t('password') ?></label>
-                    <input type="password" name="password" required minlength="6" placeholder="<?= t('enter_password') ?>">
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-block">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                        <polyline points="10 17 15 12 10 7"/>
-                        <line x1="15" y1="12" x2="3" y2="12"/>
-                    </svg>
-                    <?= t('sign_in') ?>
-                </button>
-            </form>
-            
-            <script>
-                const translations = {
-                    en: {
-                        national_id: '<?= addslashes(t('national_id')) ?>',
-                        work_id: '<?= addslashes(t('work_id')) ?>',
-                        enter_national_id: '<?= addslashes(t('enter_national_id')) ?>',
-                        enter_work_id: '<?= addslashes(t('enter_work_id')) ?>'
-                    },
-                    ar: {
-                        national_id: 'رقم الهوية الوطنية',
-                        work_id: 'رقم العمل',
-                        enter_national_id: 'أدخل رقم الهوية الوطنية المكون من 14 رقماً',
-                        enter_work_id: 'أدخل رقم العمل المكون من 9 أرقام'
-                    }
-                };
-                
-                const currentLang = '<?= $lang ?>';
-                
-                function updateLoginForm() {
-                    const userType = document.querySelector('input[name="user_type"]:checked').value;
-                    const idLabel = document.getElementById('idLabel');
-                    const identifierInput = document.getElementById('identifierInput');
+                <form method="POST">
+                    <div class="form-group">
+                        <label><?= t('login_as') ?></label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="user_type" value="user" checked onchange="updateLoginForm()">
+                                <span><?= t('user') ?></span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="user_type" value="admin" onchange="updateLoginForm()">
+                                <span><?= t('admin') ?></span>
+                            </label>
+                        </div>
+                    </div>
                     
-                    if (userType === 'admin') {
-                        idLabel.textContent = translations[currentLang].work_id;
-                        identifierInput.placeholder = translations[currentLang].enter_work_id;
-                        identifierInput.maxLength = 9;
-                        identifierInput.pattern = '\\d{9}';
-                    } else {
-                        idLabel.textContent = translations[currentLang].national_id;
-                        identifierInput.placeholder = translations[currentLang].enter_national_id;
-                        identifierInput.maxLength = 14;
-                        identifierInput.pattern = '\\d{14}';
-                    }
-                    identifierInput.value = '';
-                }
-            </script>
-            
-            <div class="form-footer">
-                <span style="color: var(--text-secondary);">Don't have an account? </span>
-                <a href="signup.php" class="signup-link">Sign Up</a>
+                    <div class="form-group">
+                        <label id="idLabel"><?= t('national_id') ?></label>
+                        <input type="text" name="identifier" id="identifierInput" class="form-control" 
+                               required maxlength="14" pattern="\d{14}" 
+                               placeholder="<?= t('enter_national_id') ?>" 
+                               value="<?= htmlspecialchars($_POST['identifier'] ?? '') ?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><?= t('password') ?></label>
+                        <input type="password" name="password" class="form-control" 
+                               required minlength="6" 
+                               placeholder="<?= t('enter_password') ?>">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                        <?= t('sign_in') ?>
+                    </button>
+                    
+                    <div class="form-footer">
+                        Don't have an account? <a href="signup.php">Sign Up</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+    
+    <script>
+        const translations = {
+            en: {
+                national_id: '<?= addslashes(t('national_id')) ?>',
+                work_id: '<?= addslashes(t('work_id')) ?>',
+                enter_national_id: '<?= addslashes(t('enter_national_id')) ?>',
+                enter_work_id: '<?= addslashes(t('enter_work_id')) ?>'
+            },
+            ar: {
+                national_id: 'رقم الهوية الوطنية',
+                work_id: 'رقم العمل',
+                enter_national_id: 'أدخل رقم الهوية الوطنية المكون من 14 رقماً',
+                enter_work_id: 'أدخل رقم العمل المكون من 9 أرقام'
+            }
+        };
+        
+        const currentLang = '<?= $lang ?>';
+        
+        function updateLoginForm() {
+            const userType = document.querySelector('input[name="user_type"]:checked').value;
+            const idLabel = document.getElementById('idLabel');
+            const identifierInput = document.getElementById('identifierInput');
+            
+            if (userType === 'admin') {
+                idLabel.textContent = translations[currentLang].work_id;
+                identifierInput.placeholder = translations[currentLang].enter_work_id;
+                identifierInput.maxLength = 9;
+                identifierInput.pattern = '\\d{9}';
+            } else {
+                idLabel.textContent = translations[currentLang].national_id;
+                identifierInput.placeholder = translations[currentLang].enter_national_id;
+                identifierInput.maxLength = 14;
+                identifierInput.pattern = '\\d{14}';
+            }
+            identifierInput.value = '';
+        }
+    </script>
 </body>
 </html>

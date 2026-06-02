@@ -107,34 +107,43 @@ $isRTL = $lang === 'ar';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= t('app_name') ?> - <?= t('sign_up') ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        html, body {
-            height: 100%;
+        * {
             margin: 0;
             padding: 0;
-            background: #0f1d3f !important;
-            background-color: #0f1d3f !important;
+            box-sizing: border-box;
         }
-        body.signup-page {
-            display: flex;
-            flex-direction: column;
+        
+        :root {
+            --primary: #0f1d3f;
+            --primary-light: #1e3a8a;
+            --secondary: #FBBF24;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --border: #e2e8f0;
+        }
+        
+        html, body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f1d3f 0%, #1e3a8a 100%);
+        }
+        
+        .page-wrapper {
             min-height: 100vh;
-            background: #0f1d3f !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
         }
-        body.signup-page::before,
-        body.signup-page::after {
-            display: none !important;
-        }
-        .signup-container {
-            background: transparent !important;
-        }
+        
         .back-arrow {
             position: fixed;
             top: 24px;
             left: 24px;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -142,216 +151,290 @@ $isRTL = $lang === 'ar';
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             cursor: pointer;
             transition: all 0.3s;
-            z-index: 1000;
             text-decoration: none;
             color: white;
+            z-index: 100;
         }
+        
         .back-arrow:hover {
-            transform: translateX(-4px);
             background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            transform: translateX(-4px);
         }
-        .signup-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px 60px;
-        }
+        
         .signup-card {
             width: 100%;
-            max-width: 680px;
-            padding: 48px !important;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
+            max-width: 700px;
+            background: white;
             border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
         }
         
-        .signup-form {
+        .card-header {
+            background: linear-gradient(135deg, #0f1d3f 0%, #1e3a8a 100%);
+            padding: 40px 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .card-header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .card-header p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+        
+        .card-body {
+            padding: 40px;
+        }
+        
+        .alert {
+            padding: 16px 20px;
+            background: #fee;
+            border: 1px solid #fcc;
+            border-radius: 12px;
+            color: #c00;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+        
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px 20px;
-            grid-auto-flow: dense;
+            gap: 20px;
         }
         
-        .signup-form .form-group.full-width {
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-group.full-width {
             grid-column: 1 / -1;
         }
         
-        @media (max-width: 768px) {
-            .signup-form {
-                grid-template-columns: 1fr;
-            }
-            .signup-card {
-                padding: 32px !important;
-            }
-        }
-        .signup-card h1 {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .signup-card .subtitle {
-            font-size: 15px;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .signup-form .form-group {
-            margin-bottom: 0 !important;
-        }
-        .signup-form .form-group label {
+        .form-group label {
             display: block;
-            font-size: 14px !important;
-            margin-bottom: 8px !important;
+            font-size: 15px;
             font-weight: 600;
             color: var(--text-primary);
+            margin-bottom: 8px;
         }
-        .signup-form input,
-        .signup-form textarea {
+        
+        .form-control {
             width: 100%;
-            padding: 14px 16px !important;
-            font-size: 15px !important;
-            border-radius: 10px !important;
-            border: 2px solid #e2e8f0 !important;
-            background: white !important;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
+            padding: 16px 18px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: white;
         }
-        .signup-form input:focus,
-        .signup-form textarea:focus {
-            border-color: var(--primary) !important;
-            outline: none !important;
-            box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.1) !important;
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(15, 29, 63, 0.1);
         }
-        .signup-form button {
+        
+        .form-control::placeholder {
+            color: #a0aec0;
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+        
+        .btn {
             width: 100%;
-            padding: 14px 24px !important;
-            font-size: 16px !important;
-            margin-top: 8px !important;
-            border-radius: 10px !important;
+            padding: 16px 24px;
+            font-size: 17px;
             font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 24px;
         }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -10px rgba(15, 29, 63, 0.5);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
         .form-footer {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 2px solid var(--border);
             text-align: center;
-            margin-top: 32px !important;
-            padding-top: 28px !important;
-            border-top: 2px solid var(--border-light);
+            font-size: 15px;
+            color: var(--text-secondary);
         }
+        
         .form-footer a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 700;
-            display: inline-block;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-        .form-footer .login-link {
-            padding: 2px 0;
-            border-bottom: 2px solid transparent;
-        }
-        .form-footer .login-link:hover {
+        
+        .form-footer a:hover {
             text-decoration: underline;
-            color: var(--primary);
         }
-        .alert {
-            padding: 16px 20px !important;
-            font-size: 16px !important;
-            margin-bottom: 24px !important;
-            border-radius: 12px !important;
+        
+        @media (max-width: 768px) {
+            .signup-card {
+                max-width: 100%;
+            }
+            
+            .card-header {
+                padding: 30px 24px 24px;
+            }
+            
+            .card-header h1 {
+                font-size: 26px;
+            }
+            
+            .card-body {
+                padding: 30px 24px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .back-arrow {
+                top: 16px;
+                left: 16px;
+                width: 44px;
+                height: 44px;
+            }
         }
     </style>
 </head>
-<body class="signup-page">
-    <!-- Back Arrow -->
+<body>
     <a href="home.php" class="back-arrow">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="19" y1="12" x2="5" y2="12"/>
             <polyline points="12 19 5 12 12 5"/>
         </svg>
     </a>
     
-    <div class="signup-container">
+    <div class="page-wrapper">
         <div class="signup-card">
-            <!-- Title and Tagline -->
-            <div style="text-align: center; margin-bottom: 32px;">
-                <h1 style="font-size: 32px; font-weight: 900; color: var(--text-primary); margin-bottom: 10px;"><?= t('create_account') ?></h1>
-                <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 0;">Join thousands making roads safer</p>
+            <div class="card-header">
+                <h1><?= t('create_account') ?></h1>
+                <p>Join thousands making roads safer</p>
             </div>
             
-            <?php if ($error): ?>
-                <div class="alert alert-error" style="grid-column: 1 / -1;"><?= htmlspecialchars($error) ?></div>
-            <?php endif; ?>
-            
-            <form method="POST" class="signup-form">
-                <div class="form-group">
-                    <label><?= t('national_id') ?></label>
-                    <input type="text" name="national_id" required maxlength="14" pattern="\d{14}"
-                           placeholder="Enter your 14-digit National ID"
-                           value="<?= htmlspecialchars($_POST['national_id'] ?? '') ?>">
-                </div>
+            <div class="card-body">
+                <?php if ($error): ?>
+                    <div class="alert">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <?= htmlspecialchars($error) ?>
+                    </div>
+                <?php endif; ?>
                 
-                <div class="form-group">
-                    <label><?= t('full_name') ?></label>
-                    <input type="text" name="name" required minlength="3"
-                           placeholder="Enter your full name"
-                           value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
-                </div>
-                
-                <div class="form-group">
-                    <label><?= t('email') ?></label>
-                    <input type="email" name="email" required
-                           placeholder="Enter your email address"
-                           value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
-                </div>
-                
-                <div class="form-group">
-                    <label><?= t('phone_number') ?></label>
-                    <input type="tel" name="phone" required pattern="\d{10,15}"
-                           placeholder="Enter your phone number"
-                           value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
-                </div>
-                
-                <div class="form-group">
-                    <label><?= t('password') ?></label>
-                    <input type="password" name="password" required minlength="6"
-                           placeholder="Create a strong password">
-                </div>
-                
-                <div class="form-group">
-                    <label><?= t('confirm_password') ?></label>
-                    <input type="password" name="confirm_password" required minlength="6"
-                           placeholder="Re-enter your password">
-                </div>
-                
-                <div class="form-group full-width">
-                    <label><?= t('address') ?></label>
-                    <textarea name="address" required minlength="5" rows="3" 
-                              placeholder="Enter your full address"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-block full-width" style="margin-top: 16px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                        <circle cx="8.5" cy="7" r="4"/>
-                        <line x1="20" y1="8" x2="20" y2="14"/>
-                        <line x1="23" y1="11" x2="17" y2="11"/>
-                    </svg>
-                    <?= t('create_account') ?>
-                </button>
-            </form>
-                
-                <div class="form-footer">
-                    <span style="color: var(--text-secondary);">Already have an account? </span>
-                    <a href="login.php" class="login-link" style="color: var(--primary); text-decoration: none; font-weight: 700;">Sign In</a>
-                </div>
+                <form method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><?= t('national_id') ?></label>
+                            <input type="text" name="national_id" class="form-control" 
+                                   required maxlength="14" pattern="\d{14}"
+                                   placeholder="14-digit National ID"
+                                   value="<?= htmlspecialchars($_POST['national_id'] ?? '') ?>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><?= t('full_name') ?></label>
+                            <input type="text" name="name" class="form-control" 
+                                   required minlength="3"
+                                   placeholder="Your full name"
+                                   value="<?= htmlspecialchars($_POST['name'] ?? '') ?>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><?= t('email') ?></label>
+                            <input type="email" name="email" class="form-control" 
+                                   required
+                                   placeholder="your@email.com"
+                                   value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><?= t('phone_number') ?></label>
+                            <input type="tel" name="phone" class="form-control" 
+                                   required pattern="\d{10,15}"
+                                   placeholder="Phone number"
+                                   value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><?= t('password') ?></label>
+                            <input type="password" name="password" class="form-control" 
+                                   required minlength="6"
+                                   placeholder="Create password">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><?= t('confirm_password') ?></label>
+                            <input type="password" name="confirm_password" class="form-control" 
+                                   required minlength="6"
+                                   placeholder="Confirm password">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label><?= t('address') ?></label>
+                            <textarea name="address" class="form-control" 
+                                      required minlength="5" rows="3" 
+                                      placeholder="Your full address"><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="8.5" cy="7" r="4"/>
+                            <line x1="20" y1="8" x2="20" y2="14"/>
+                            <line x1="23" y1="11" x2="17" y2="11"/>
+                        </svg>
+                        <?= t('create_account') ?>
+                    </button>
+                    
+                    <div class="form-footer">
+                        Already have an account? <a href="login.php">Sign In</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
