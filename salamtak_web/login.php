@@ -195,39 +195,53 @@ $isRTL = $lang === 'ar';
         }
         .login-card {
             width: 100%;
-            max-width: 800px;
-            padding: 40px 48px !important;
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 900px;
+            padding: 48px 60px !important;
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
+            border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .login-card h2 {
-            font-size: 32px !important;
-            margin-bottom: 12px !important;
+            font-size: 36px !important;
+            margin-bottom: 16px !important;
             color: var(--text-primary);
+            font-weight: 800;
         }
         .login-card .subtitle {
-            font-size: 16px !important;
-            margin-bottom: 24px !important;
+            font-size: 18px !important;
+            margin-bottom: 32px !important;
+            color: var(--text-secondary);
         }
         .login-form .form-group {
-            margin-bottom: 20px !important;
+            margin-bottom: 24px !important;
         }
         .login-form .form-group label {
-            font-size: 14px !important;
-            margin-bottom: 8px !important;
-        }
-        .login-form input {
-            padding: 14px 16px !important;
             font-size: 15px !important;
+            margin-bottom: 10px !important;
+            font-weight: 600;
+        }
+        .login-form input,
+        .login-form select {
+            padding: 16px 20px !important;
+            font-size: 16px !important;
+            border-radius: 12px !important;
+            border: 2px solid #e2e8f0 !important;
+            background: white !important;
+        }
+        .login-form input:focus,
+        .login-form select:focus {
+            border-color: var(--primary) !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(15, 29, 63, 0.1) !important;
         }
         .login-form button {
-            padding: 16px 24px !important;
-            font-size: 16px !important;
-            margin-top: 8px !important;
+            padding: 18px 32px !important;
+            font-size: 17px !important;
+            margin-top: 12px !important;
             border-radius: 12px !important;
+            font-weight: 700;
         }
         .form-footer {
             margin-top: 20px !important;
@@ -235,8 +249,8 @@ $isRTL = $lang === 'ar';
         }
         .form-footer {
             text-align: center;
-            margin-top: 28px !important;
-            padding-top: 24px !important;
+            margin-top: 32px !important;
+            padding-top: 28px !important;
             border-top: 2px solid var(--border-light);
         }
         .form-footer a {
@@ -255,9 +269,10 @@ $isRTL = $lang === 'ar';
             color: var(--primary);
         }
         .alert {
-            padding: 14px 16px !important;
-            font-size: 15px !important;
-            margin-bottom: 20px !important;
+            padding: 16px 20px !important;
+            font-size: 16px !important;
+            margin-bottom: 24px !important;
+            border-radius: 12px !important;
         }
     </style>
 </head>
@@ -273,9 +288,9 @@ $isRTL = $lang === 'ar';
     <div class="login-container">
         <div class="login-card">
             <!-- Title and Tagline -->
-            <div style="text-align: center; margin-bottom: 32px;">
-                <h1 style="font-size: 36px; font-weight: 800; color: var(--text-primary); margin-bottom: 12px;"><?= t('app_name') ?></h1>
-                <p style="font-size: 16px; color: var(--text-secondary); margin-bottom: 0;"><?= t('tagline') ?></p>
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h1 style="font-size: 42px; font-weight: 900; color: var(--text-primary); margin-bottom: 14px;"><?= t('app_name') ?></h1>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 0;"><?= t('tagline') ?></p>
             </div>
             
             <h2><?= t('welcome_back') ?></h2>
