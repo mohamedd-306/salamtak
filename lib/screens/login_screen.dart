@@ -39,7 +39,18 @@ class _LoginScreenState extends State<LoginScreen> {
       final nationalId = _nationalIdController.text.trim();
       final password = _passwordController.text.trim();
 
-      final user = await DatabaseService.instance.login(nationalId, password);
+      // Add 15-second timeout to prevent infinite loading
+      final user = await DatabaseService.instance
+          .login(nationalId, password)
+          .timeout(
+            const Duration(seconds: 15),
+            onTimeout: () {
+              throw Exception(
+                'Connection timeout. Please check your internet connection.',
+              );
+            },
+          );
+
       if (user != null) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
@@ -76,7 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       if (!mounted) return;
-      _showError(AppLocalizations.of(context).somethingWentWrong);
+      // Show specific error message for timeout
+      if (e.toString().contains('timeout') ||
+          e.toString().contains('Timeout')) {
+        _showError(
+          'Connection timeout. Please check your internet connection and try again.',
+        );
+      } else {
+        _showError(AppLocalizations.of(context).somethingWentWrong);
+      }
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -169,7 +188,10 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               child: SafeArea(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 20,
+                  ),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 450),
                     child: Form(
